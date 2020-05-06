@@ -1,0 +1,4037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animate.css">
+  <title>Document</title>
+</head>
+<body>
+
+  <div class="container">
+
+    <!--Перерасчет топлива на новый состав-->
+    <div class="row fuelRecalculation">
+    </br>
+      <h3>Пересчёт топлива
+      </br>
+        <span>(Дробные числа через <span style="color:red; font-size:40px;">.</span>)</span>
+      </h3>
+
+      <div class="col-lg-3">
+      </br>
+
+        <div class="input-group">
+          <span class="input-group-addon">W<sub>1</sub><sup>r</sup> =</span>
+          <input type="text" id="WsupR" class="form-control">
+          <span class="input-group-addon">%</span>
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">A<sub>1</sub><sup>r</sup> =</span>
+          <input type="text" id="AsupR" class="form-control">
+          <span class="input-group-addon">%</span>
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">W<sub>2</sub><sup>r</sup> =</span>
+          <input type="text" id="WsupR2" class="form-control">
+          <span class="input-group-addon">%</span>
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">A<sub>2</sub><sup>r</sup> =</span>
+          <input type="text" id="AsupR2" class="form-control">
+          <span class="input-group-addon">%</span>
+        </div>
+      </div>
+
+      <div class="col-lg-3">
+      </br>
+
+        <div class="input-group">
+          <span class="input-group-addon">S<sub>р</sub><sup>r</sup> =</span>
+          <input type="text" id="SsubR" class="form-control">
+          <span class="input-group-addon">%</span>
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">S<sub>o</sub><sup>r</sup> =</span>
+          <input type="text" id="SsubO" class="form-control">
+          <span class="input-group-addon">%</span>
+        </div>
+        <p>Если дано одно значение:</p>
+        <div class="input-group">
+          <span class="input-group-addon">S<sub> </sub><sup>r</sup> =</span>
+          <input type="text" id="SsupR" class="form-control">
+          <span class="input-group-addon">%</span>
+        </div>
+
+      </div>
+
+      <div class="col-lg-3">
+      </br>
+
+        <div class="input-group">
+          <span class="input-group-addon">C<sub>1</sub><sup>r</sup> =</span>
+          <input type="text" id="CsupR" class="form-control">
+          <span class="input-group-addon">%</span>
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">H<sub>1</sub><sup>r</sup> =</span>
+          <input type="text" id="HsupR" class="form-control">
+          <span class="input-group-addon">%</span>
+        </div>
+
+      </div>
+
+      <div class="col-lg-3">
+      </br>
+
+        <div class="input-group">
+          <span class="input-group-addon">N<sub>1</sub><sup>r</sup> =</span>
+          <input type="text" id="NsupR" class="form-control">
+          <span class="input-group-addon">%</span>
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">O<sub>1</sub><sup>r</sup> =</span>
+          <input type="text" id="OsupR" class="form-control">
+          <span class="input-group-addon">%</span>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="row button-area" align="center">
+        <button class="btn btn-info ok okfuelRecalculation">Ok</button>
+    </div>
+    <!--Перерасчет топлива на новый состав-->
+
+    <!--Вывод информации о составе топлива-->
+    <div class="row">
+      <div class="col-lg-8 viewComposition">
+
+      </div>
+    </div>
+    <!--Вывод информации о составе топлива-->
+
+    <!--Перерасчет низшей теплоты сгорания-->
+    <div class="QsubLowerInput" hidden>
+      <div class="row">
+        <div class="col-lg-6">
+        </br>
+
+          <div class="input-group">
+            <span class="input-group-addon">Q<sub>i1</sub><sup>r</sup> =</span>
+            <input type="text" id="QsubLower" class="form-control">
+            <span class="input-group-addon">кДж/кг</span>
+          </div>
+        </div>
+      </div>
+      <div class="row button-area" align="center">
+          <button class="btn btn-info ok okQsubLowerInput">Ok</button>
+      </div>
+    </div>
+    <!--Перерасчет низшей теплоты сгорания-->
+
+    <!--Вывод информации о низшей теплоты сгорания-->
+    <div class="row">
+      <div class="col-lg-6 viewQsubLower">
+
+      </div>
+    </div>
+    <!--Вывод информации о низшей теплоты сгорания-->
+
+    <!--Вычисление объемов воздуха и продуктов сгорания, вывод информации таблица 1-->
+    <div class="VolumesAirAndProducts" hidden>
+    <div class="row">
+      <div class="col-lg-8 viewVolumesAirAndProducts">
+         <table border="1">
+            <tr>
+                <td >Расчетные формулы</td>
+                <td>Размерность</td>
+                <td colspan="4" align="center">Газоходы</td>
+            </tr>
+            <tr>
+                <td>Среднее значение коэффициента в газоходе</td>
+                <td>-</td>
+                <td>1.20</td>
+                <td>1.23</td>
+                <td>1.25</td>
+                <td>1.28</td>
+            </tr>
+            <tr id="Vh20Tr">
+                <td>V<sub>H2O</sub>=V<sup>0</sup><sub>H2O</sub>+0.0161(α-1)V<sup>0</sup></td>
+                <td>м<sup>3</sup>/кг</td>
+
+            </tr>
+            <tr id="VG20Tr">
+                <td>V<sub>г</sub>=V<sub>RO2</sub>+V<sup>0</sup><sub>N2</sub>+V<sub>H2O</sub>+(α-1)V<sup>0</sup></td>
+                <td>м<sup>3</sup>/кг</td>
+
+            </tr>
+            <tr id="rRo2tr">
+                <td>r<sub>RO2</sub>=V<sub>RO2</sub> / V<sub>г</sub></td>
+                <td>-</td>
+
+            </tr>
+            <tr id="rH2Otr">
+                <td>r<sub>H2O</sub>=V<sub>H20</sub> / V<sub>г</sub></td>
+                <td>-</td>
+
+            </tr>
+            <tr id="rp">
+                <td>r<sub>п</sub>=r<sub>RO2</sub>+r<sub>H2O</sub></td>
+                <td>-</td>
+
+            </tr>
+            <tr id="muZl">
+                <td>μ<sub>зл</sub>=0.01A<sup>r</sup>α<sub>ун</sub> / G<sub>г</sub></td>
+                <td>кг/кг</td>
+
+            </tr>
+            <tr id="Ggtr">
+                <td>G<sub>г</sub> = 1-0.01A<sup>r</sup>+1.306αV<sup>0</sup></td>
+                <td>кг/кг</td>
+
+            </tr>
+
+        </table>
+      </div>
+     </div>
+    </div>
+    <!--Вычисление объемов воздуха и продуктов сгорания, вывод информации таблица 1-->
+
+    <!--Вычисление энтальпий таблица 2-->
+    <div class="Enthalpy row" hidden>
+      <div class="row">
+        <div class="col-lg-8">
+        <p id="successEnthalpy">Заполните энтальпии продуктов для θ = <span id="temperatureEnthalpy">100 </span><sup>o</sup>C</p>
+        </br>
+
+          <div class="input-group">
+            <span class="input-group-addon">(Cθ)<sub id="subEnt">CO2</sub> =</span>
+            <input type="text" id="EnthalpyText" class="form-control">
+            <span class="input-group-addon">Ккал/кг</span>
+          </div>
+        </div>
+       </div>
+
+         <button class="btn btn-info ok okEnthalpyInput">Ok</button>
+         <button class="btn btn-primary ok skipButton">Пропустить</button>
+    </div>
+
+    <div class="EnthalpyTable" hidden>
+    </br>
+    <div class="row">
+      <div class="col-lg-6 viewEnthalpyTable">
+           <table border="1" id="Table2">
+             <tr>
+                 <td rowspan="3">θ, <sup>o</sup>C</td>
+                 <td rowspan="3">H<sup>0</sup><sub>г</sub></td>
+                 <td rowspan="3">H<sup>0</sup><sub>в</sub></td>
+                 <td rowspan="3">H<sup>0</sup><sub>зл</sub></td>
+                 <td colspan="8">H = H<sup>0</sup><sub>г</sub> + (α-1)H<sup>0</sup><sub>в</sub> + H<sup>0</sup><sub>зл</sub></td>
+             </tr>
+             <tr>
+                 <td colspan="2">α<sub>1</sub>=1.20</td>
+                 <td colspan="2">α<sub>2</sub>=1.23</td>
+                 <td colspan="2">α<sub>3</sub>=1.25</td>
+                 <td colspan="2">α<sub>4</sub>=1.28</td>
+             </tr>
+             <tr>
+                 <td>H</td>
+                 <td>ΔH</td>
+                 <td>H</td>
+                 <td>ΔH</td>
+                 <td>H</td>
+                 <td>ΔH</td>
+                 <td>H</td>
+                 <td>ΔH</td>
+             </tr>
+          </table>
+      </div>
+     </div>
+    </div>
+    <!--Вычисление энтальпий таблица 2-->
+   </br>
+   <div id="Chamber" hidden>
+     <p class='part' align='center'>4</p>
+     <h3>Тепловой баланс котельного агрегата, расчет топочной камеры</h3>
+     <span>(Сначала заполните необходимые данные и нажмите <span style="color:red; font-size:30px;">ок</span>)</span>
+  </div>
+    <!--Тепловой баланс котельного агрегата, расчет топочной камеры-->
+
+    <div class="row calculationChamber" hidden>
+
+      <div class="col-lg-12">
+           <table border="1">
+              <tr>
+                  <td><b>Расчитываемая величина</b></td>
+                  <td><b>Обозначение</b></td>
+                  <td><b>Размерность</b></td>
+                  <td><b>Формула</b></td>
+                  <td><b>Результат</b></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия перегретого пара</td>
+                  <td>i<sub>пп</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="CHField1" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия питательной воды</td>
+                  <td>i<sub>пв</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="CHField2" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Количество насыщенного пара</td>
+                  <td>D<sub>нп</sub></td>
+                  <td>кг/с</td>
+                  <td>Задано</td>
+                  <td><input type="text" id="CHField3" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Расход воды на продувку</td>
+                  <td>D<sub>пр</sub></td>
+                  <td>кг/с</td>
+                  <td>0.03*D<sub>нп</sub></td>
+                  <td id="CHPaste1"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия воды на продувку</td>
+                  <td>i<sub>кин</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="CHField4" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Количество тепла, полезно отданного в котельный агрегат</td>
+                  <td>Q<sub>кл</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>D<sub>нп</sub>*(i<sub>пп</sub>-i<sub>пв</sub>)+D<sub>пр</sub>*(i<sub>кин</sub>-i<sub>пв</sub>)</td>
+                  <td id="CHPaste2"></td>
+              </tr>
+              <tr>
+                  <td>Низшая рабочая теплота сгорания</td>
+                  <td>Q<sup>н</sup><sub>р</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>-</td>
+                  <td id="QsubLower2kkal"></td>
+              </tr>
+              <tr>
+                  <td>Температура топлива</td>
+                  <td>t<sub>тл</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>Задано</td>
+                  <td><input type="text" id="CHField5" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Темлоемкость сухой части топлива</td>
+                  <td>C<sup>c</sup><sub>л</sub></td>
+                  <td>Ккал/кг*<sup>o</sup>C</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="CHField6" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Теплоемкость рабочего топлива</td>
+                  <td>C<sup>р</sup><sub>л</sub></td>
+                  <td>Ккал/кг*<sup>o</sup>C</td>
+                  <td>W/100 + C<sup>c</sup><sub>л</sub>*(100 - W)/100</td>
+                  <td id="CHPaste3"></td>
+              </tr>
+              <tr>
+                  <td>Физическое тепло топлива</td>
+                  <td>i<sub>тл</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>C<sup>р</sup><sub>л</sub>*t<sub>тл</sub></td>
+                  <td id="CHPaste4"></td>
+              </tr>
+              <tr>
+                  <td>Распологаемое тепло</td>
+                  <td>Q<sup>р</sup><sub>р</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>Q<sup>н</sup><sub>р</sub> + i<sub>тл</sub></td>
+                  <td id="CHPaste13"></td>
+              </tr>
+              <tr>
+                  <td>Потери от химической неполноты сгорания</td>
+                  <td>q<sub>3</sub></td>
+                  <td>%</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="CHField7" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Потери от механической неполноты сгорания</td>
+                  <td>q<sub>4</sub></td>
+                  <td>%</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="CHField8" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Потери тепла от наружного охлаждения</td>
+                  <td>q<sub>5</sub></td>
+                  <td>%</td>
+                  <td>По графику</td>
+                  <td><input type="text" id="CHField9" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Доля шлака</td>
+                  <td>a<sub>шл</sub></td>
+                  <td>-</td>
+                  <td>1 - a<sub>ун</sub></td>
+                  <td id="CHPaste5"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия шлака</td>
+                  <td>(Cθ)<sub>зл</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="CHField10" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Потери со шлаком</td>
+                  <td>q<sub>6</sub></td>
+                  <td>%</td>
+                  <td>(a<sub>шл</sub>*(Cθ)<sub>зл</sub>*A<sup>r</sup>)/Q<sup>р</sup><sub>р</sub></td>
+                  <td id="CHPaste6"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия холодного воздуха</td>
+                  <td>I<sub>хв</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="CHField11" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия уходящих газов</td>
+                  <td>I<sub>ух.г</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="CHField12" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент избытка воздуха для скгорания топлива</td>
+                  <td>α<sub>ух</sub></td>
+                  <td>-</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="CHField13" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Потеря теплоты с уходящими газами</td>
+                  <td>q<sub>2</sub></td>
+                  <td>%</td>
+                  <td>(I<sub>ух.г</sub> - α<sub>ух</sub>*I<sub>хв</sub>)*(100 - q<sub>4</sub>)/Q<sup>р</sup><sub>р</sub></td>
+                  <td id="CHPaste7"></td>
+              </tr>
+              <tr>
+                  <td>Суммарыне потери</td>
+                  <td>∑q</td>
+                  <td>%</td>
+                  <td>q<sub>2</sub> + q<sub>3</sub> + q<sub>4</sub> + q<sub>5</sub> + q<sub>6</sub></td>
+                  <td id="CHPaste8"></td>
+              </tr>
+              <tr>
+                  <td>Кпд котельного агрегата</td>
+                  <td>η<sub>кл</sub></td>
+                  <td>%</td>
+                  <td>100 - ∑q</td>
+                  <td id="CHPaste9"></td>
+              </tr>
+              <tr>
+                  <td>Полный расход топлива</td>
+                  <td>B</td>
+                  <td>кг/ч</td>
+                  <td>(Q<sub>кл</sub>*3600*100)/Q<sup>р</sup><sub>р</sub>*η<sub>кл</sub></td>
+                  <td id="CHPaste10"></td>
+              </tr>
+              <tr>
+                  <td>Расчетный расход топлива</td>
+                  <td>B<sub>р</sub></td>
+                  <td>кг/ч</td>
+                  <td>B*(1 - q<sub>4</sub>/100)</td>
+                  <td id="CHPaste11"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент сохранения тепла</td>
+                  <td>φ</td>
+                  <td>-</td>
+                  <td>1 - (q<sub>5</sub>/(η<sub>кл</sub> + q<sub>5</sub>))</td>
+                  <td id="CHPaste12"></td>
+              </tr>
+              <tr><td colspan="5"><b>Расчет топочной камеры</b></td></tr>
+              <tr>
+                  <td>Парапроизводительность</td>
+                  <td>D</td>
+                  <td>т/ч</td>
+                  <td>Задано</td>
+                  <td><input type="text" id="CHField14" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Ширина фронта</td>
+                  <td>a<sub>s</sub></td>
+                  <td>м</td>
+                  <td>0.67*<sub>⎷ </sub> D</td>
+                  <td id="CHPaste14"></td>
+              </tr>
+              <tr>
+                  <td>Глубина топочной камеры</td>
+                  <td>b<sub>т</sub></td>
+                  <td>м</td>
+                  <td>2*a<sub>s</sub> / 3</td>
+                  <td id="CHPaste15"></td>
+              </tr>
+              <tr>
+                  <td>Присосы в топке</td>
+                  <td>Δα<sub>т</sub></td>
+                  <td>-</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="CHField15" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Присосы в пылеприготовительной системе</td>
+                  <td>Δα<sub>пл</sub></td>
+                  <td>-</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="CHField16" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Температура горячего воздуха</td>
+                  <td>t<sub>гв</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>Принята предварительно</td>
+                  <td><input type="text" id="CHField17" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия горячего воздуха</td>
+                  <td>I<sup>o''</sup><sub>в</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="CHField18" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Тепло вносимое в топку воздухом</td>
+                  <td>Q<sub>в</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>(α<sub>т</sub> - Δα<sub>пл</sub>)*I<sup>o''</sup><sub>в</sub> + Δα<sub>пл</sub>*I<sub>хв</sub></td>
+                  <td id="CHPaste16"></td>
+              </tr>
+              <tr>
+                  <td>Полезное тепловыделение в топке</td>
+                  <td>Q<sub>т</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>Q<sup>р</sup><sub>р</sub>*(100 - q<sub>3</sub> - q<sub>4</sub> - q<sub>6</sub>)/(100 - q<sub>4</sub>) + Q<sup>в</sup></td>
+                  <td id="CHPaste17"></td>
+              </tr>
+              <tr>
+                  <td>Теоретическая температура горения</td>
+                  <td>Т<sub>а</sub></td>
+                  <td>К</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="CHField19" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Относительное положение максимума температур по высоте топки</td>
+                  <td>χ<sub>т</sub></td>
+                  <td>-</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="CHField20" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент</td>
+                  <td>M</td>
+                  <td>-</td>
+                  <td>0.59 - 0.5*χ<sub>т</sub></td>
+                  <td id="CHPaste18"></td>
+              </tr>
+              <tr>
+                  <td>Температура газов на выходе из топки</td>
+                  <td>θ<sup>''</sup><sub>т</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="CHField21" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия газов на выходе из топки</td>
+                  <td>I<sup>''</sup><sub>т</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="CHField22" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Количество тепла, воспринятого в топке</td>
+                  <td>Q<sub>л</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>φ*(Q<sub>т</sub> - I<sup>''</sup><sub>т</sub>)</td>
+                  <td id="CHPaste19"></td>
+              </tr>
+              <tr>
+                  <td>Средняя суммарная теплоемкость продуктов сгорания</td>
+                  <td>Vc<sub>ср</sub></td>
+                  <td>Ккал/кг*<sup>o</sup>C</td>
+                  <td>(Q<sub>т</sub> - I<sup>''</sup><sub>в</sub>)/(Т<sub>а</sub> - θ<sup>''</sup><sub>т</sub>)</td>
+                  <td id="CHPaste20"></td>
+              </tr>
+              <tr>
+                  <td>Площадь поверхностей стен топки</td>
+                  <td>F<sub>ст</sub></td>
+                  <td>м<sup>2</sup></td>
+                  <td>Из геометрии</td>
+                  <td><input type="text" id="CHField23" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Площадь поверхностей боковых стен топки</td>
+                  <td>F<sub>б</sub></td>
+                  <td>м<sup>2</sup></td>
+                  <td>Из геометрии</td>
+                  <td><input type="text" id="CHField24" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Площадь экрана топки</td>
+                  <td>F<sub>эк</sub></td>
+                  <td>м<sup>2</sup></td>
+                  <td>Из геометрии</td>
+                  <td><input type="text" id="CHField33" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Объем топки</td>
+                  <td>V</td>
+                  <td>м<sup>3</sup></td>
+                  <td>F<sub>б</sub>*a<sub>s</sub></td>
+                  <td id="CHPaste21"></td>
+              </tr>
+              <tr>
+                  <td>Эффективная толщина излучающего слоя</td>
+                  <td>S</td>
+                  <td>м</td>
+                  <td>3.6*V/F<sub>ст</sub></td>
+                  <td id="CHPaste22"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент ослабления трехатомными газами</td>
+                  <td>k<sub>г</sub></td>
+                  <td>см<sup>2</sup>/м*кгс</td>
+                  <td>По номограмме 3</td>
+                  <td><input type="text" id="CHField25" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент ослабления золовыми частицами</td>
+                  <td>k<sub>зл</sub></td>
+                  <td>см<sup>2</sup>/м*кгс</td>
+                  <td>По номограмме 4</td>
+                  <td><input type="text" id="CHField26" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент ослабления частицами кокса</td>
+                  <td>k<sub>кокс</sub></td>
+                  <td>см<sup>2</sup>/м*кгс</td>
+                  <td>По приложению</td>
+                  <td><input type="text" id="CHField27" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Безразмерная величина</td>
+                  <td>χ<sub>1</sub></td>
+                  <td>-</td>
+                  <td>По приложению</td>
+                  <td><input type="text" id="CHField28" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Безразмерная величина</td>
+                  <td>χ<sub>2</sub></td>
+                  <td>-</td>
+                  <td>По приложению</td>
+                  <td><input type="text" id="CHField29" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Оптическая величина</td>
+                  <td>k<sub>p</sub>s</td>
+                  <td>-</td>
+                  <td>(k<sub>г</sub>*r<sub>п</sub> + k<sub>зл</sub>*μ<sub>зл</sub> + k<sub>кокс</sub>*χ<sub>1</sub>*χ<sub>2</sub>)*p*S</td>
+                  <td id="CHPaste23"></td>
+              </tr>
+              <tr>
+                  <td>Степень черноты факела</td>
+                  <td>a<sub>ф</sub></td>
+                  <td>-</td>
+                  <td>1 - e<sup>-k<sub>p</sub>s</sup></td>
+                  <td id="CHPaste24"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент учитывающий взаимный теплообмен между топкой и ширмовым перегревателем</td>
+                  <td>β</td>
+                  <td>-</td>
+                  <td>По графику</td>
+                  <td><input type="text" id="CHField30" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Лучевоспринимающая поверхность нагрева</td>
+                  <td>H<sub>л</sub></td>
+                  <td>м<sup>2</sup></td>
+                  <td>F<sub>эк</sub>*β</td>
+                  <td id="CHPaste25"></td>
+              </tr>
+              <tr>
+                  <td>Средний коэффициент тепловой эффективности</td>
+                  <td>ψ<sub>ср</sub></td>
+                  <td>-</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="CHField31" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Степень черноты топочной камеры</td>
+                  <td>a<sub>т</sub></td>
+                  <td>-</td>
+                  <td>a<sub>ф</sub>/(a<sub>ф</sub> + (1 - a<sub>ф</sub>)*ψ<sub>ср</sub>)</td>
+                  <td id="CHPaste26"></td>
+              </tr>
+              <tr>
+                  <td>Температура газов на выходе из топки</td>
+                  <td>θ<sup>''</sup><sub>т</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>Т<sub>а</sub> / (M*(4.9*ψ<sub>ср</sub>*F<sub>ст</sub>*Т<sup>3</sup><sub>а</sub>*a<sub>т</sub> / 10<sup>8</sup>*φ*B<sub>р</sub>*Vc<sub>ср</sub>)<sup>0.6</sup>+1) - 273</td>
+                  <td id="CHPaste27"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия газов на выходе из топки</td>
+                  <td>I<sup>''</sup><sub>т</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="CHField32" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Средняя суммарная теплоемкость продуктов сгорания</td>
+                  <td>Vc<sub>ср</sub></td>
+                  <td>Ккал/кг*<sup>o</sup>C</td>
+                  <td>(Q<sub>т</sub> - I<sup>''</sup><sub>т</sub>)/(Т<sub>а</sub> - θ<sup>''</sup><sub>т</sub>)</td>
+                  <td id="CHPaste28"></td>
+              </tr>
+              <tr>
+                  <td>Критерий Больцмана</td>
+                  <td>B<sub>0</sub></td>
+                  <td>-</td>
+                  <td>φ*B<sub>р</sub>*Vc<sub>ср</sub> / 4.9*10<sup>-8</sup>*ψ<sub>ср</sub>*F<sub>ст</sub>*Т<sup>3</sup><sub>а</sub></td>
+                  <td id="CHPaste29"></td>
+              </tr>
+              <tr>
+                  <td>Количество тепла, воспринятого в топке</td>
+                  <td>Q<sub>л</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>φ*(Q<sub>т</sub> - I<sup>''</sup><sub>т</sub>)</td>
+                  <td id="CHPaste30"></td>
+              </tr>
+              <tr>
+                  <td>Средняя тепловая нагрузка лучевоспринимающей поверхности нагрева</td>
+                  <td>q<sub>л</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч</td>
+                  <td>B<sub>р</sub>*Q<sub>л</sub>/H<sub>л</sub></td>
+                  <td id="CHPaste31"></td>
+              </tr>
+              <tr>
+                  <td>Теплонапряжение топочного объема</td>
+                  <td>q<sub>v</sub></td>
+                  <td>Ккал/м<sup>3</sup>*ч</td>
+                  <td>B*Q<sup>р</sup><sub>н</sub>/V</td>
+                  <td id="CHPaste32"></td>
+              </tr>
+          </table>
+         <button class="btn btn-info ok okCalculationChamber">Ok</button>
+      </div>
+
+    </div>
+
+    <!--Тепловой баланс котельного агрегата, расчет топочной камеры-->
+
+    <div id="Screens" hidden>
+      <p class='part' align='center'>5</p>
+      <h3>Расчет ширмового пароперегревателя</h3>
+      <span>(Сначала заполните необходимые данные и нажмите <span style="color:red; font-size:30px;">ок</span>)</span>
+   </div>
+
+    <!--Расчет ширмового пароперегревателя-->
+
+    <div class="row calculationScreens" hidden>
+
+      <div class="col-lg-12">
+           <table border="1">
+              <tr>
+                  <td><b>Расчитываемая величина</b></td>
+                  <td><b>Обозначение</b></td>
+                  <td><b>Размерность</b></td>
+                  <td><b>Формула</b></td>
+                  <td><b>Результат</b></td>
+              </tr>
+              <tr>
+                  <td>Температура газов на входе</td>
+                  <td>θ<sup>'</sup><sub>ш</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>θ<sup>'</sup><sub>ш</sub> = θ<sup>''</sup><sub>т</sub></td>
+                  <td id="SCPaste1"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия газов на входе</td>
+                  <td>I<sup>'</sup><sub>ш</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>I<sup>'</sup><sub>ш</sub> = I<sup>''</sup><sub>т</sub></td>
+                  <td id="SCPaste2"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия пара на входе</td>
+                  <td>i<sup>'</sup><sub>ш</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>Схема пароводяного тракта</td>
+                  <td><input type="text" id="SCField1" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия пара на выходе</td>
+                  <td>i<sup>''</sup><sub>ш</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>Схема пароводяного тракта</td>
+                  <td><input type="text" id="SCField2" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Перепад энтальпий в ширме</td>
+                  <td>Δi<sub>ш</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>i<sup>''</sup><sub>ш</sub> - i<sup>'</sup><sub>ш</sub></td>
+                  <td id="SCPaste3"></td>
+              </tr>
+              <tr>
+                  <td>Температура пара на входе</td>
+                  <td>t<sup>'</sup><sub>ш</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>Схема пароводяного тракта</td>
+                  <td><input type="text" id="SCField3" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Температура пара на выходе</td>
+                  <td>t<sup>''</sup><sub>ш</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>Схема пароводяного тракта</td>
+                  <td><input type="text" id="SCField4" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Средняя температура пара в ширме</td>
+                  <td>t<sub>ср</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>(t<sup>'</sup><sub>ш</sub> + t<sup>''</sup><sub>ш</sub>)/2</td>
+                  <td id="SCPaste4"></td>
+              </tr>
+              <tr>
+                  <td>Среднее давление в ширме</td>
+                  <td>p<sub>ср</sub></td>
+                  <td>кгс/см<sup>2</sup></td>
+                  <td>Схема пароводяного тракта</td>
+                  <td><input type="text" id="SCField5" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Расход пара в ширме</td>
+                  <td>D<sub>ш</sub></td>
+                  <td>т/ч</sup></td>
+                  <td>Схема пароводяного тракта</td>
+                  <td><input type="text" id="SCField6" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Тепловосприятие дополнительной поверхностью нагрева</td>
+                  <td>Q<sub>доп</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="SCField7" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Высота ширмы</td>
+                  <td>h<sub>ш</sub></td>
+                  <td>м</td>
+                  <td>Из геометрии</td>
+                  <td><input type="text" id="SCField8" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Число ширм</td>
+                  <td>n<sub>ш</sub></td>
+                  <td>-</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="SCField9" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Шаг между ширмами</td>
+                  <td>S<sub>1</sub></td>
+                  <td>м</td>
+                  <td>a<sub>s</sub>/(n<sub>ш</sub> + 1)</td>
+                  <td id="SCPaste5"></td>
+              </tr>
+              <tr>
+                  <td>Массовая скорость по пару</td>
+                  <td>ρW<sub>п</sub></td>
+                  <td>кг/с</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="SCField10" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Проходное сечение по пару</td>
+                  <td>f</td>
+                  <td>м<sup>2</sup></td>
+                  <td>(D*1000) / (3600*ρW<sub>п</sub>)</td>
+                  <td id="SCPaste6"></td>
+              </tr>
+              <tr>
+                  <td>Количество труб в ширме</td>
+                  <td>n<sub>тр</sub></td>
+                  <td>-</td>
+                  <td>4*f / (π*d<sup>2</sup><sub>вн</sub>*n<sub>ш</sub>)</td>
+                  <td id="SCPaste7"></td>
+              </tr>
+              <tr>
+                  <td>Количество труб в ширме</td>
+                  <td>n<sub>тр</sub></td>
+                  <td>-</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="SCField11" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Шаг между трубами</td>
+                  <td>S<sub>2</sub></td>
+                  <td>м</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="SCField12" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Внутренний диаметр труб</td>
+                  <td>d<sub>вн</sub></td>
+                  <td>м</td>
+                  <td>d<sub>н</sub> - 2*δ</td>
+                  <td id="SCPaste8"></td>
+              </tr>
+              <tr>
+                  <td>Внешний диаметр труб</td>
+                  <td>d<sub>н</sub></td>
+                  <td>м</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="SCField13" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Глубина ширмы</td>
+                  <td>l<sub>ш</sub></td>
+                  <td>м</td>
+                  <td>2*(n<sub>тр</sub> - 1)*S<sub>2</sub> + 4*d<sub>н</sub></td>
+                  <td id="SCPaste9"></td>
+              </tr>
+              <tr>
+                  <td>Массовая скорость по пару</td>
+                  <td>ρW</td>
+                  <td>кг/с</td>
+                  <td>4*D*1000 / (3600*π*d<sup>2</sup><sub>вн</sub>*(n<sub>ш</sub>/2)*n<sub>тр</sub>)</td>
+                  <td id="SCPaste10"></td>
+              </tr>
+              <tr>
+                  <td>Тепло получаемое излучением из топки</td>
+                  <td>Q<sub>лш</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>Q<sub>лвх</sub> - Q<sub>лвых</sub></td>
+                  <td id="SCPaste11"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент распределения тепловосприятия по всей топке</td>
+                  <td>η<sub>в</sub></td>
+                  <td>-</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="SCField14" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент учитывающий взаимный теплообмен между ширмой и топкой</td>
+                  <td>β</td>
+                  <td>-</td>
+                  <td>По графику</td>
+                  <td><input type="text" id="SCField15" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Высота сечения входа в ширмы</td>
+                  <td>h<sub>вхш</sub></td>
+                  <td>м</td>
+                  <td>Из геометрии</td>
+                  <td><input type="text" id="SCField16" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Лучевоспринимающая поверхность входного сечения ширм в топке</td>
+                  <td>H<sub>лвх</sub></td>
+                  <td>м<sup>2</sup></td>
+                  <td>a<sub>s</sub>*h<sub>вхш</sub></td>
+                  <td id="SCPaste12"></td>
+              </tr>
+              <tr>
+                  <td>Лучистое тепло, воспринятое плоскостью входного сечения</td>
+                  <td>Q<sub>лвх</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>Q<sub>л</sub>*η<sub>в</sub>*β*(H<sub>лвх</sub>/F<sub>ст</sub>)</td>
+                  <td id="SCPaste13"></td>
+              </tr>
+              <tr>
+                  <td>Средняя температура газа в ширме</td>
+                  <td>θ<sub>ср</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="SCField17" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент ослабления трехатомными газами</td>
+                  <td>k<sub>г</sub></td>
+                  <td>см<sup>2</sup>/м*кгс</td>
+                  <td>По номограмме 3</td>
+                  <td><input type="text" id="SCField18" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент ослабления золовыми частицами</td>
+                  <td>k<sub>зл</sub></td>
+                  <td>см<sup>2</sup>/м*кгс</td>
+                  <td>По номограмме 4</td>
+                  <td><input type="text" id="SCField19" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент ослабления лучей</td>
+                  <td>k</td>
+                  <td>-</td>
+                  <td>k<sub>г</sub>*r<sub>п</sub> + k<sub>зл</sub>*μ<sub>зл</sub></td>
+                  <td id="SCPaste14"></td>
+              </tr>
+              <tr>
+                  <td>Эффективная толщина излучающего слоя</td>
+                  <td>S</td>
+                  <td>м</td>
+                  <td>1.8 / ((1/S<sub>1</sub>) + (1/l<sub>ш</sub>) + (1/h<sub>ш</sub>))</td>
+                  <td id="SCPaste15"></td>
+              </tr>
+              <tr>
+                  <td>Оптическая толщина</td>
+                  <td>k<sub>p</sub>s</td>
+                  <td>-</td>
+                  <td>k*p*S</td>
+                  <td id="SCPaste16"></td>
+              </tr>
+              <tr>
+                  <td>Степень черноты</td>
+                  <td>a<sub>ш</sub></td>
+                  <td>-</td>
+                  <td>1 - e<sup>-k<sub>p</sub>s</sup></td>
+                  <td id="SCPaste17"></td>
+              </tr>
+              <tr>
+                  <td>Угловой коэффициент ширм</td>
+                  <td>φ<sub>ш</sub></td>
+                  <td>-</td>
+                  <td><sub>⎷</sub>((l<sub>ш</sub>/S<sub>1</sub>)<sup>2</sup> + 1) - (l<sub>ш</sub>/S<sub>1</sub>)</td>
+                  <td id="SCPaste18"></td>
+              </tr>
+              <tr>
+                  <td>Высота сечения выхода в ширмы</td>
+                  <td>h<sub>выхш</sub></td>
+                  <td>м</td>
+                  <td>Из геометрии</td>
+                  <td><input type="text" id="SCField20" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Лучевоспринимающая поверхность выходного сечения ширм в топке</td>
+                  <td>H<sub>лвых</sub></td>
+                  <td>м<sup>2</sup></td>
+                  <td>a<sub>s</sub>*h<sub>лвых</sub></td>
+                  <td id="SCPaste19"></td>
+              </tr>
+              <tr>
+                  <td>Поправочный коэффициент, зависящий от рода топлива</td>
+                  <td>ξ<sub>п</sub></td>
+                  <td>-</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="SCField21" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Тепло, излучаемое из ширм на последующие поверхности</td>
+                  <td>Q<sub>лвых</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>((Q<sub>лвх</sub>*(1-a<sub>ш</sub>)*φ<sub>ш</sub>)/β) + ((4.9*10<sup>-8</sup>*a<sub>ш</sub>*H<sub>лвх</sub>*T<sup>4</sup><sub>ср</sub>*ξ<sub>п</sub>)/B<sub>р</sub>)</td>
+                  <td id="SCPaste20"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия газов на выходе из ширмы</td>
+                  <td>I<sup>''</sup><sub>ш</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>I<sup>'</sup><sub>ш</sub> + (Q<sub>лш</sub> - Q<sub>доп</sub> - D<sub>ш</sub>*1000*Δi<sub>ш</sub>/B<sub>р</sub>)/φ</td>
+                  <td id="SCPaste21"></td>
+              </tr>
+              <tr>
+                  <td>Температура газов на выходе из ширмы</td>
+                  <td>θ<sup>''</sup><sub>ш</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="SCField22" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Средняя температура в ширме</td>
+                  <td>θ<sub>ср</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>(θ<sup>''</sup><sub>ш</sub> + θ<sup>'</sup><sub>ш</sub>)/2</td>
+                  <td id="SCPaste22"></td>
+              </tr>
+              <tr>
+                  <td>Расчетная поверхность ширмы</td>
+                  <td>H<sub>р</sub></td>
+                  <td>м<sup>2</sup></td>
+                  <td>2*h<sub>ш</sub>(l<sub>ш</sub> + d<sub>н</sub>)*n<sub>ш</sub>*χ</td>
+                  <td id="SCPaste23"></td>
+              </tr>
+              <tr>
+                  <td>Угловой коэффициент</td>
+                  <td>χ</td>
+                  <td>-</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="SCField23" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Больший перепад температур</td>
+                  <td>τ<sub>б</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>θ<sup>'</sup><sub>ш</sub> - θ<sup>''</sup><sub>ш</sub></td>
+                  <td id="SCPaste24"></td>
+              </tr>
+              <tr>
+                  <td>Меньший перепад температур</td>
+                  <td>τ<sub>м</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>t<sup>''</sup><sub>ш</sub> - t<sup>'</sup><sub>ш</sub></td>
+                  <td id="SCPaste25"></td>
+              </tr>
+              <tr>
+                  <td>Больший температурный напор</td>
+                  <td>Δt<sub>б</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>θ<sup>'</sup><sub>ш</sub> - t<sup>'</sup><sub>ш</sub></td>
+                  <td id="SCPaste26"></td>
+              </tr>
+              <tr>
+                  <td>Меньший температурный напор</td>
+                  <td>Δt<sub>м</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>θ<sup>''</sup><sub>ш</sub> - t<sup>''</sup><sub>ш</sub></td>
+                  <td id="SCPaste27"></td>
+              </tr>
+              <tr>
+                  <td>Параметр</td>
+                  <td>P</td>
+                  <td>-</td>
+                  <td>τ<sub>м</sub> / (θ<sup>''</sup><sub>ш</sub> - t<sup>'</sup><sub>ш</sub>)</td>
+                  <td id="SCPaste28"></td>
+              </tr>
+              <tr>
+                  <td>Параметр</td>
+                  <td>R</td>
+                  <td>-</td>
+                  <td>τ<sub>б</sub> / τ<sub>м</sub></td>
+                  <td id="SCPaste29"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент пересчета</td>
+                  <td>ψ</td>
+                  <td>-</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="SCField24" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Средняя разность температур</td>
+                  <td>Δt<sub>ср</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>(Δt<sub>б</sub> + Δt<sub>м</sub>)/2</td>
+                  <td id="SCPaste30"></td>
+              </tr>
+              <tr>
+                  <td>Температурный напор</td>
+                  <td>Δt</td>
+                  <td><sup>o</sup>C</td>
+                  <td>Δt<sub>ср</sub>*ψ</td>
+                  <td id="SCPaste31"></td>
+              </tr>
+              <tr>
+                  <td>Проходное сечение по пару</td>
+                  <td>F</td>
+                  <td>м<sub>2</sub></td>
+                  <td>a<sub>s</sub>*h<sub>ш</sub> - h<sub>ш</sub>*d<sub>н</sub>*n<sub>ш</sub></td>
+                  <td id="SCPaste32"></td>
+              </tr>
+              <tr>
+                  <td>Скорость газов</td>
+                  <td>W</td>
+                  <td>м/с</td>
+                  <td>(B<sub>р</sub>*V<sub>г</sub>*(θ<sub>ср</sub> + 273)) / (3600*F*273)</td>
+                  <td id="SCPaste33"></td>
+              </tr>
+              <tr>
+                  <td>Суммарное тепло, переданное пару в ширмах</td>
+                  <td>Q<sub>ш</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>(D<sub>ш</sub>*Δi<sub>ш</sub>/B<sub>р</sub>) - Q<sub>лш</sub></td>
+                  <td id="SCPaste34"></td>
+              </tr>
+              <tr>
+                  <td>Относительный продольный шаг</td>
+                  <td>σ<sub>1</sub></td>
+                  <td>-</td>
+                  <td>S<sub>1</sub> / d <sub>н</sub></td>
+                  <td id="SCPaste35"></td>
+              </tr>
+              <tr>
+                  <td>Относительный поперечный шаг</td>
+                  <td>σ<sub>2</sub></td>
+                  <td>-</td>
+                  <td>S<sub>2</sub> / d <sub>н</sub></td>
+                  <td id="SCPaste36"></td>
+              </tr>
+              <tr>
+                  <td>Поправка на геометрическую компоновку</td>
+                  <td>C<sub>s</sub></td>
+                  <td>-</td>
+                  <td>[1 + (2*σ<sub>1</sub> - 3)*(1 - σ<sub>2</sub>/2)<sup>3</sup>]<sup>-2</sup></td>
+                  <td id="SCPaste37"></td>
+              </tr>
+              <tr>
+                  <td>Поправочный коэффициент на число рядов</td>
+                  <td>C<sub>z</sub></td>
+                  <td>-</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="SCField25" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Поправочный коэффициент</td>
+                  <td>C<sub>ф</sub></td>
+                  <td>-</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="SCField26" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент теплоотдачи конвекцией</td>
+                  <td>α<sub>нк</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="SCField27" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент теплоотдачи с газовой стороны конвекцией</td>
+                  <td>α<sub>к</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>α<sub>нк</sub>*C<sub>s</sub>*C<sub>z</sub>*C<sub>ф</sub></td>
+                  <td id="SCPaste38"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент загрязнения</td>
+                  <td>ε</td>
+                  <td>-</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="SCField28" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Удельный объем пара</td>
+                  <td>υ<sub>п</sub></td>
+                  <td>м<sup>3</sup>/кг</td>
+                  <td>По таблице при p<sub>ср</sub>, t <sub>ср</sub></td>
+                  <td><input type="text" id="SCField29" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Скорость пара</td>
+                  <td>W</td>
+                  <td>м/с</td>
+                  <td>ρW*υ<sub>п</sub></td>
+                  <td id="SCPaste39"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент теплоотдачи от стенки к пару</td>
+                  <td>α<sub>2</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="SCField30" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Температура наружного слоя загрязнения</td>
+                  <td>t<sub>з</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>t<sub>ср</sub> + (ε + 1/α<sub>2</sub>)*(B<sub>р</sub>/H<sub>р</sub>)*(Q<sub>ш</sub> + Q<sub>лш</sub>)</td>
+                  <td id="SCPaste40"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент теплоотдачи излучением</td>
+                  <td>α<sub>нл</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="SCField31" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент теплоотдачи излучением</td>
+                  <td>α<sub>л</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>a<sub>ш</sub>*α<sub>нл</sub></td>
+                  <td id="SCPaste41"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент теплоотдачи от газа к стенке</td>
+                  <td>α<sub>1</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>ξ*((α<sub>нк</sub>*π*d<sub>н</sub>)/2*S<sub>2</sub>*χ + α<sub>л</sub>)</td>
+                  <td id="SCPaste52"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент использования</td>
+                  <td>ξ</td>
+                  <td>-</td>
+                  <td>По графику</td>
+                  <td><input type="text" id="SCField32" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент теплопередачи</td>
+                  <td>k</td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>α<sub>1</sub> / [1 + (1 + Q<sub>лш</sub>/Q<sub>ш</sub>)*(ε + 1/α<sub>2</sub>)*α<sub>1</sub>]</td>
+                  <td id="SCPaste42"></td>
+              </tr>
+              <tr>
+                  <td>Тепловосприятие ширмы</td>
+                  <td>Q<sub>т</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>k*Δt*H<sub>р</sub>/B<sub>р</sub></td>
+                  <td id="SCPaste43"></td>
+              </tr>
+              <tr>
+                  <td>Количество переданного тепла</td>
+                  <td>Q<sub>τ</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>Q<sub>τ</sub> = Q<sub>т</sub></td>
+                  <td id="SCPaste44"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия газов на выходе из ширмы</td>
+                  <td>I<sup>''</sup><sub>ш</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>I<sup>'</sup><sub>ш</sub> - (Q<sub>ш</sub> - Q<sub>доп</sub>)/φ</td>
+                  <td id="SCPaste45"></td>
+              </tr>
+              <tr>
+                  <td>Температура газов на выходе</td>
+                  <td>θ<sup>''</sup><sub>ш</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="SCField33" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия пара на входе</td>
+                  <td>i<sup>'</sup><sub>ш</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>i<sup>''</sup><sub>ш</sub> + (-Q<sub>ш</sub> - Q<sub>лш</sub>)*B<sub>р</sub>/D<sub>ш</sub></td>
+                  <td id="SCPaste46"></td>
+              </tr>
+              <tr>
+                  <td>Температура пара на входе</td>
+                  <td>t<sup>'</sup><sub>ш</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="SCField34" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Большая разность температур</td>
+                  <td>Δt<sub>б</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>θ<sup>'</sup> - t<sup>'</sup></td>
+                  <td id="SCPaste47"></td>
+              </tr>
+              <tr>
+                  <td>Меньшая разность температур</td>
+                  <td>Δt<sub>м</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>θ<sup>''</sup> - t<sup>''</sup></td>
+                  <td id="SCPaste48"></td>
+              </tr>
+              <tr>
+                  <td>Температурный напор</td>
+                  <td>Δt</td>
+                  <td><sup>o</sup>C</td>
+                  <td>(Δt<sub>б</sub> + Δt<sub>м</sub>)*ψ/2</td>
+                  <td id="SCPaste49"></td>
+              </tr>
+              <tr>
+                  <td>Тепловосприятие ширмы</td>
+                  <td>Q<sup>'</sup><sub>т</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>k*Δt*H<sub>р</sub>/B<sub>р</sub></td>
+                  <td id="SCPaste50"></td>
+              </tr>
+              <tr>
+                  <td>Погрешность</td>
+                  <td>-</td>
+                  <td>%</td>
+                  <td>[ |(Q<sup>'</sup><sub>т</sub> - Q<sub>т</sub>) / Q<sup>'</sup><sub>т</sub>| ]*100%</td>
+                  <td id="SCPaste51"></td>
+              </tr>
+          </table>
+         <button class="btn btn-info ok okCalculationScreens">Ok</button>
+      </div>
+
+    </div>
+
+    <!--Расчет ширмового пароперегревателя-->
+
+    <div id="HotStep" hidden>
+      <p class='part' align='center'>6</p>
+      <h3>Расчет конвективного пароперегревателя (горячая ступень)</h3>
+      <span>(Сначала заполните необходимые данные и нажмите <span style="color:red; font-size:30px;">ок</span>)</span>
+   </div>
+
+    <!--Расчет конвективного пароперегревателя (горячая ступень)-->
+
+    <div class="row calculationHotStep" hidden>
+
+      <div class="col-lg-12">
+           <table border="1">
+              <tr>
+                  <td><b>Расчитываемая величина</b></td>
+                  <td><b>Обозначение</b></td>
+                  <td><b>Размерность</b></td>
+                  <td><b>Формула</b></td>
+                  <td><b>Результат</b></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия пара на входе в горячую ступень</td>
+                  <td>i<sup>'</sup><sub>гс</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>Схема пароводяного тракта</td>
+                  <td><input type="text" id="HSField1" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия пара на выходе из горячей ступени</td>
+                  <td>i<sup>''</sup><sub>гс</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>Схема пароводяного тракта</td>
+                  <td><input type="text" id="HSField2" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Разность энтальпий по пару</td>
+                  <td>Δi</td>
+                  <td>Ккал/кг</td>
+                  <td>i<sup>''</sup><sub>гс</sub> - i<sup>'</sup><sub>гс</sub></td>
+                  <td id="HSPaste1"></td>
+              </tr>
+              <tr>
+                  <td>Температура пара на входе в горячую ступень</td>
+                  <td>t<sup>'</sup><sub>гс</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>Схема пароводяного тракта</td>
+                  <td><input type="text" id="HSField3" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Температура пара на выходе из горячей ступени</td>
+                  <td>t<sup>''</sup><sub>гс</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>Схема пароводяного тракта</td>
+                  <td><input type="text" id="HSField4" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Средняя энтальпия по пару</td>
+                  <td>Δi<sub>ср</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>(i<sup>'</sup><sub>гс</sub> + i<sup>''</sup><sub>гс</sub>)/2</td>
+                  <td id="HSPaste2"></td>
+              </tr>
+              <tr>
+                  <td>Средняя температура по пару</td>
+                  <td>t<sub>ср</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>(t<sup>'</sup><sub>гс</sub> + t<sup>''</sup><sub>гс</sub>)/2</td>
+                  <td id="HSPaste3"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия газов на входе в горячую ступень</td>
+                  <td>I<sup>'</sup><sub>гс</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>I<sup>'</sup><sub>гс</sub> = I<sup>''</sup><sub>ш</sub></td>
+                  <td id="HSPaste4"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия газов на выходе из горячей ступени</td>
+                  <td>I<sup>''</sup><sub>гс</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>(φ*I<sup>'</sup><sub>гс</sub> - Q<sub>б</sub>)/φ</td>
+                  <td id="HSPaste5"></td>
+              </tr>
+              <tr>
+                  <td>Балансовое тепло, передаваемое в горячем перегревателе</td>
+                  <td>Q<sub>б</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>(D<sub>гс</sub>*Δi<sub>гс</sub>/B<sub>р</sub>) - Q<sub>л</sub></td>
+                  <td id="HSPaste6"></td>
+              </tr>
+              <tr>
+                  <td>Расход пара через горячий перегреватель</td>
+                  <td>D<sub>гс</sub></td>
+                  <td>т/ч</sup></td>
+                  <td>Схема пароводяного тракта</td>
+                  <td><input type="text" id="HSField5" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Давление пара на входе в горячую ступень</td>
+                  <td>p<sub>вх</sub></td>
+                  <td>кгс/см<sup>2</sup></td>
+                  <td>Схема пароводяного тракта</td>
+                  <td><input type="text" id="HSField6" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Давление пара на выходе из горячей ступени</td>
+                  <td>p<sub>вых</sub></td>
+                  <td>кгс/см<sup>2</sup></td>
+                  <td>Схема пароводяного тракта</td>
+                  <td><input type="text" id="HSField7" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Среднее давление пара в горячей ступени</td>
+                  <td>p<sub>ср</sub></td>
+                  <td>кгс/см<sup>2</sup></td>
+                  <td>(p<sub>вх</sub> + p<sub>вых</sub>)/2</td>
+                  <td id="HSPaste7"></td>
+              </tr>
+              <tr>
+                  <td>Температура газа на входе в горячую ступень</td>
+                  <td>θ<sup>'</sup><sub>гс</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="HSField8" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Температура газа на выходе из горячей ступени</td>
+                  <td>θ<sup>''</sup><sub>гс</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="HSField9" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Средняя температура газа в горячей ступени</td>
+                  <td>θ<sub>ср</sub></td>
+                  <td>кгс/см<sup>2</sup></td>
+                  <td>(θ<sup>'</sup><sub>гс</sub> + θ<sup>''</sup><sub>гс</sub>)/2</td>
+                  <td id="HSPaste8"></td>
+              </tr>
+              <tr>
+                  <td>Внешний диаметр труб</td>
+                  <td>d<sub>н</sub></td>
+                  <td>м</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="HSField10" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Внутренний диаметр труб</td>
+                  <td>d<sub>вн</sub></td>
+                  <td>м</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="HSField11" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Поперечный шаг</td>
+                  <td>S<sub>1</sub></td>
+                  <td>м</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="HSField12" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Продольный шаг</td>
+                  <td>S<sub>2</sub></td>
+                  <td>м</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="HSField13" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Относительный поперечный шаг</td>
+                  <td>σ<sub>1</sub></td>
+                  <td>-</td>
+                  <td>S<sub>1</sub> / d <sub>н</sub></td>
+                  <td id="HSPaste9"></td>
+              </tr>
+              <tr>
+                  <td>Относительный продольный шаг</td>
+                  <td>σ<sub>2</sub></td>
+                  <td>-</td>
+                  <td>S<sub>2</sub> / d <sub>н</sub></td>
+                  <td id="HSPaste10"></td>
+              </tr>
+              <tr>
+                  <td>Число змеевиков</td>
+                  <td>n<sub>зм</sub></td>
+                  <td>-</td>
+                  <td>a<sub>s</sub>/S<sub>1</sub> - 1</td>
+                  <td id="HSPaste11"></td>
+              </tr>
+              <tr>
+                  <td>Массовая скорость пара</td>
+                  <td>ρW<sub>п</sub></td>
+                  <td>кг/с</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="HSField14" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Проходное сечение по пару</td>
+                  <td>f</td>
+                  <td>м<sup>2</sup></td>
+                  <td>(D*1000) / (3600*ρW<sub>п</sub>)</td>
+                  <td id="HSPaste12"></td>
+              </tr>
+              <tr>
+                  <td>Количество заходов</td>
+                  <td>n<sub>зах</sub></td>
+                  <td>-</td>
+                  <td>4*f / (π*d<sup>2</sup><sub>вн</sub>*n<sub>зм</sub>)</td>
+                  <td id="HSPaste13"></td>
+              </tr>
+              <tr>
+                  <td>Проходное сечение по пару (пересчет)</td>
+                  <td>f<sub>нов</sub></td>
+                  <td>м<sup>2</sup></td>
+                  <td>n<sub>зм</sub>*n<sub>зах</sub>*(π*d<sup>2</sup><sub>вн</sub>/4)</td>
+                  <td id="HSPaste14"></td>
+              </tr>
+              <tr>
+                  <td>Число змеевиков (пересчет)</td>
+                  <td>n<sub>зм</sub></td>
+                  <td>-</td>
+                  <td>4*f<sub>нов</sub> / (π*d<sup>2</sup><sub>вн</sub>*n<sub>зах</sub>)</td>
+                  <td id="HSPaste15"></td>
+              </tr>
+              <tr>
+                  <td>Массовая скорость пара</td>
+                  <td>ρW<sup>нов</sup><sub>п</sub></td>
+                  <td>кг/с</td>
+                  <td>D*1000 / (f<sub>нов</sub>*3600)</td>
+                  <td id="HSPaste16"></td>
+              </tr>
+              <tr>
+                  <td>Удельный объем пара</td>
+                  <td>υ<sub>п</sub></td>
+                  <td>м<sup>3</sup>/кг</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="HSField15" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Скорость пара</td>
+                  <td>W<sub>п</sub></td>
+                  <td>м/с</td>
+                  <td>ρW<sup>нов</sup><sub>п</sub>*υ<sub>п</sub></td>
+                  <td id="HSPaste38"></td>
+              </tr>
+              <tr>
+                  <td>Больший перепад температур</td>
+                  <td>Δt<sub>б</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>θ<sup>'</sup><sub>гс</sub> - t<sup>'</sup><sub>гс</sub></td>
+                  <td id="HSPaste17"></td>
+              </tr>
+              <tr>
+                  <td>Меньший перепад температур</td>
+                  <td>Δt<sub>м</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>θ<sup>''</sup><sub>гс</sub> - t<sup>''</sup><sub>гс</sub></td>
+                  <td id="HSPaste18"></td>
+              </tr>
+              <tr>
+                  <td>Температурный напор</td>
+                  <td>Δt<sub>г</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>(Δt<sub>б</sub> - Δt<sub>м</sub>) / (2.3*lg(Δt<sub>б</sub>/Δt<sub>м</sub>))</td>
+                  <td id="HSPaste19"></td>
+              </tr>
+              <tr>
+                  <td>Проходное сечение по газу</td>
+                  <td>F</td>
+                  <td>м<sup>2</sup></td>
+                  <td>h<sub>гор</sub>*a<sub>s</sub> - b*d<sub>н</sub>*n<sub>зм</sub></td>
+                  <td id="HSPaste20"></td>
+              </tr>
+              <tr>
+                  <td>Средняя высота горизонта</td>
+                  <td>h<sub>гор</sub></td>
+                  <td>м</td>
+                  <td>Из геометрии</td>
+                  <td><input type="text" id="HSField16" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Скорость газа</td>
+                  <td>W<sub>г</sub></td>
+                  <td>м/с</td>
+                  <td>(B<sub>р</sub>*V<sub>г</sub>*(θ<sub>ср</sub> + 273)) / (3600*F*273)</td>
+                  <td id="HSPaste21"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент теплопередачи</td>
+                  <td>k</td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="HSField17" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Поверхность теплопередачи</td>
+                  <td>H<sub>г</sub></td>
+                  <td>м<sup>2</sup></td>
+                  <td>B<sub>р</sub>*θ<sub>б</sub> / (k*Δt<sub>г</sub>)</td>
+                  <td id="HSPaste22"></td>
+              </tr>
+              <tr>
+                  <td>Эффективная толщина излучающего слоя</td>
+                  <td>S</td>
+                  <td>м</td>
+                  <td>0.9*d<sub>н</sub>*((4*S<sub>1</sub>*S<sub>2</sub>) / (π*d<sup>2</sup><sub>н</sub>) - 1)</td>
+                  <td id="HSPaste23"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент ослабления трехатомными газами</td>
+                  <td>k<sub>г</sub></td>
+                  <td>см<sup>2</sup>/м*кгс</td>
+                  <td>По номограмме 3</td>
+                  <td><input type="text" id="HSField18" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент ослабления золовыми частицами</td>
+                  <td>k<sub>зл</sub></td>
+                  <td>см<sup>2</sup>/м*кгс</td>
+                  <td>По номограмме 4</td>
+                  <td><input type="text" id="HSField19" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент ослабления лучей</td>
+                  <td>k</td>
+                  <td>-</td>
+                  <td>k<sub>г</sub>*r<sub>п</sub> + k<sub>зл</sub>*μ<sub>зл</sub></td>
+                  <td id="HSPaste24"></td>
+              </tr>
+              <tr>
+                  <td>Оптическая толщина</td>
+                  <td>k<sub>p</sub>s</td>
+                  <td>-</td>
+                  <td>k*p*S</td>
+                  <td id="HSPaste25"></td>
+              </tr>
+              <tr>
+                  <td>Степень черноты</td>
+                  <td>a<sub>ч</sub></td>
+                  <td>-</td>
+                  <td>1 - e<sup>-k<sub>p</sub>s</sup></td>
+                  <td id="HSPaste26"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент тепловой эффективности</td>
+                  <td>ψ</td>
+                  <td>-</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="HSField20" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент загрязнения</td>
+                  <td>ε</td>
+                  <td>-</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="HSField21" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Номинальный коэффициент теплоотдачи конвекцией к пару</td>
+                  <td>α<sub>н2</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="HSField22" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Поправка</td>
+                  <td>C<sub>d</sub></td>
+                  <td>-</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="HSField23" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент теплоотдачи конвекцией к пару</td>
+                  <td>α<sub>2</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>α<sub>н2</sub>*C<sub>d</sub></td>
+                  <td id="HSPaste27"></td>
+              </tr>
+              <tr>
+                  <td>Температура загрязнения стенки</td>
+                  <td>t<sub>з</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>t<sub>ср</sub> + (ε + 1/α<sub>2</sub>)*B<sub>р</sub>*((Q<sub>б</sub> + Q<sub>л</sub>)/H<sub>р</sub>)</td>
+                  <td id="HSPaste28"></td>
+              </tr>
+              <tr>
+                  <td>Номинальный коэффициент теплоотдачи излучением</td>
+                  <td>α<sub>нл</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="HSField24" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент теплоотдачи излучением</td>
+                  <td>α<sub>л</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>4.9*10<sup>-8</sup>*a<sub>ч</sub>*(θ<sup>3</sup><sub>ср</sub>+273)*((1 - (t<sub>з</sub>+273/θ<sub>ср</sub>+273)<sup>4</sup>) / (1 - (t<sub>з</sub>+273/θ<sub>ср</sub>+273)))</td>
+                  <td id="HSPaste29"></td>
+              </tr>
+              <tr>
+                  <td>Поправка на число труб по ходу газа</td>
+                  <td>C<sub>z</sub></td>
+                  <td>-</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="HSField25" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Поправка на геометрическую компоновку</td>
+                  <td>C<sub>s</sub></td>
+                  <td>-</td>
+                  <td>[1 + (2*σ<sub>1</sub> - 3)*(1 - σ<sub>2</sub>/2)<sup>3</sup>]<sup>-2</sup></td>
+                  <td id="HSPaste30"></td>
+              </tr>
+              <tr>
+                  <td>Поправка</td>
+                  <td>C<sub>ф</sub></td>
+                  <td>-</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="HSField26" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Номинальный коэффициент теплоотдачи конвекцией от газа</td>
+                  <td>α<sub>нк</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="HSField27" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент теплоотдачи конвекцией от газа</td>
+                  <td>α<sub>к</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>α<sub>нк</sub>*C<sub>z</sub>*C<sub>s</sub>*C<sub>ф</sub></td>
+                  <td id="HSPaste31"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент использования</td>
+                  <td>ξ</td>
+                  <td>-</td>
+                  <td>По графику</td>
+                  <td><input type="text" id="HSField28" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент теплоотдачи к пару</td>
+                  <td>α<sub>1</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>ξ*(α<sub>л</sub> + α<sub>к</sub>)</td>
+                  <td id="HSPaste32"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент теплопередачи</td>
+                  <td>k</td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>ψ*(α<sub>1</sub> / (1 + α<sub>1</sub>/α<sub>2</sub>))</td>
+                  <td id="HSPaste33"></td>
+              </tr>
+              <tr>
+                  <td>Поверхность теплопередачи</td>
+                  <td>H<sup>расч</sup><sub>г</sub></td>
+                  <td>м<sup>2</sup></td>
+                  <td>B<sub>р</sub>*θ<sub>б</sub> / (k*Δt<sub>г</sub>)</td>
+                  <td id="HSPaste34"></td>
+              </tr>
+              <tr>
+                  <td>Погрешность</td>
+                  <td>-</td>
+                  <td>%</td>
+                  <td>[ |(H<sup>расч</sup><sub>г</sub> - H<sub>г</sub>) / H<sup>расч</sup><sub>г</sub>| ]*100%</td>
+                  <td id="HSPaste35"></td>
+              </tr>
+              <tr>
+                  <td>Длина змеевика</td>
+                  <td>l<sub>зм</sub></td>
+                  <td>м</td>
+                  <td>H<sup>расч</sup><sub>г</sub> / π*d<sub>н</sub>*n<sub>зм</sub>*n<sub>зах</sub></td>
+                  <td id="HSPaste36"></td>
+              </tr>
+              <tr>
+                  <td>Число прямых участков</td>
+                  <td>n<sub>пр</sub></td>
+                  <td>-</td>
+                  <td>H<sup>расч</sup><sub>г</sub> / π*d<sub>н</sub>*h<sub>гор</sub>*n<sub>зм</sub>*n<sub>зах</sub></td>
+                  <td id="HSPaste37"></td>
+              </tr>
+
+          </table>
+         <button class="btn btn-info ok okcalculationHotStep">Ok</button>
+      </div>
+
+    </div>
+
+    <!--Расчет конвективного пароперегревателя (горячая ступень)-->
+
+    <div id="ColdStep" hidden>
+      <p class='part' align='center'>7</p>
+      <h3>Расчет конвективного пароперегревателя (холодная ступень)</h3>
+      <span>(Сначала заполните необходимые данные и нажмите <span style="color:red; font-size:30px;">ок</span>)</span>
+   </div>
+
+    <!--Расчет конвективного пароперегревателя (холодная ступень)-->
+
+    <div class="row calculationColdStep" hidden>
+
+      <div class="col-lg-12">
+           <table border="1">
+              <tr>
+                  <td><b>Расчитываемая величина</b></td>
+                  <td><b>Обозначение</b></td>
+                  <td><b>Размерность</b></td>
+                  <td><b>Формула</b></td>
+                  <td><b>Результат</b></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия пара на входе в холодную ступень</td>
+                  <td>i<sup>'</sup><sub>хс</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>Схема пароводяного тракта</td>
+                  <td><input type="text" id="CSField1" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия пара на выходе из холодной ступени</td>
+                  <td>i<sup>''</sup><sub>хс</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>Схема пароводяного тракта</td>
+                  <td><input type="text" id="CSField2" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Разность энтальпий по пару</td>
+                  <td>Δi<sub>хс</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>i<sup>''</sup><sub>хс</sub> - i<sup>'</sup><sub>хс</sub></td>
+                  <td id="CSPaste1"></td>
+              </tr>
+              <tr>
+                  <td>Температура пара на входе в холодную ступень</td>
+                  <td>t<sup>'</sup><sub>хс</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>Схема пароводяного тракта</td>
+                  <td><input type="text" id="CSField3" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Температура пара на выходе из холодной ступени</td>
+                  <td>t<sup>''</sup><sub>хс</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>Схема пароводяного тракта</td>
+                  <td><input type="text" id="CSField4" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Средняя температура по пару</td>
+                  <td>Δt<sub>хс</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>(t<sup>'</sup><sub>хс</sub> + t<sup>''</sup><sub>хс</sub>)/2</td>
+                  <td id="CSPaste2"></td>
+              </tr>
+              <tr>
+                  <td>Расход пара через холодный перегреватель</td>
+                  <td>D<sub>хс</sub></td>
+                  <td>т/ч</sup></td>
+                  <td>Схема пароводяного тракта</td>
+                  <td><input type="text" id="CSField5" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Среднее давление пара в холодной ступени</td>
+                  <td>p<sub>ср</sub></td>
+                  <td>кгс/см<sup>2</sup></td>
+                  <td>Схема пароводяного тракта</td>
+                  <td><input type="text" id="CSField6" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия газов на входе в холодную ступень</td>
+                  <td>I<sup>'</sup><sub>хс</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>I<sup>'</sup><sub>хс</sub> = I<sup>''</sup><sub>гс</sub></td>
+                  <td id="CSPaste3"></td>
+              </tr>
+              <tr>
+                  <td>Температура газа на входе в холодную ступень</td>
+                  <td>θ<sup>'</sup><sub>хс</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>θ<sup>'</sup><sub>хс</sub> = θ<sup>''</sup><sub>гс</sub></td>
+                  <td id="CSPaste4"></td>
+              </tr>
+              <tr>
+                  <td>Балансовое тепло, передаваемое в холодном перегревателе</td>
+                  <td>Q<sub>б</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>(D<sub>хс</sub>*Δi<sub>хс</sub>/B<sub>р</sub>) - Q<sub>л</sub></td>
+                  <td id="CSPaste5"></td>
+              </tr>
+              <tr>
+                  <td>Энтальпия газов на выходе из холодной ступени</td>
+                  <td>I<sup>''</sup><sub>хс</sub></td>
+                  <td>Ккал/кг</td>
+                  <td>(φ*I<sup>'</sup><sub>хс</sub> - Q<sub>б</sub>)/φ</td>
+                  <td id="CSPaste6"></td>
+              </tr>
+              <tr>
+                  <td>Температура газа на выходе из холодной ступени</td>
+                  <td>θ<sup>''</sup><sub>хс</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="CSField7" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Средняя температура газа в холодной ступени</td>
+                  <td>θ<sub>ср</sub></td>
+                  <td>кгс/см<sup>2</sup></td>
+                  <td>(θ<sup>'</sup><sub>хс</sub> + θ<sup>''</sup><sub>хс</sub>)/2</td>
+                  <td id="CSPaste7"></td>
+              </tr>
+              <tr>
+                  <td>Удельный объем пара</td>
+                  <td>υ<sub>п</sub></td>
+                  <td>м<sup>3</sup>/кг</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="CSField8" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Внешний диаметр труб</td>
+                  <td>d<sub>н</sub></td>
+                  <td>м</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="CSField9" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Внутренний диаметр труб</td>
+                  <td>d<sub>вн</sub></td>
+                  <td>м</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="CSField10" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Поперечный шаг</td>
+                  <td>S<sub>1</sub></td>
+                  <td>м</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="CSField11" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Продольный шаг</td>
+                  <td>S<sub>2</sub></td>
+                  <td>м</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="CSField12" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Относительный поперечный шаг</td>
+                  <td>σ<sub>1</sub></td>
+                  <td>-</td>
+                  <td>S<sub>1</sub> / d <sub>н</sub></td>
+                  <td id="CSPaste8"></td>
+              </tr>
+              <tr>
+                  <td>Относительный продольный шаг</td>
+                  <td>σ<sub>2</sub></td>
+                  <td>-</td>
+                  <td>S<sub>2</sub> / d <sub>н</sub></td>
+                  <td id="CSPaste9"></td>
+              </tr>
+              <tr>
+                  <td>Число змеевиков</td>
+                  <td>n<sub>зм</sub></td>
+                  <td>-</td>
+                  <td>2*a<sub>s</sub>/S<sub>1</sub> - 2</td>
+                  <td id="CSPaste10"></td>
+              </tr>
+              <tr>
+                  <td>Массовая скорость пара</td>
+                  <td>ρW<sub>п</sub></td>
+                  <td>кг/с</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="CSField13" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Проходное сечение по пару</td>
+                  <td>f</td>
+                  <td>м<sup>2</sup></td>
+                  <td>(D<sub>хс</sub>*1000) / (3600*ρW<sub>п</sub>)</td>
+                  <td id="CSPaste11"></td>
+              </tr>
+              <tr>
+                  <td>Количество заходов</td>
+                  <td>n<sub>зах</sub></td>
+                  <td>-</td>
+                  <td>4*f / (π*d<sup>2</sup><sub>вн</sub>*n<sub>зм</sub>)</td>
+                  <td id="CSPaste12"></td>
+              </tr>
+              <tr>
+                  <td>Проходное сечение по пару (пересчет)</td>
+                  <td>f<sub>нов</sub></td>
+                  <td>м<sup>2</sup></td>
+                  <td>n<sub>зм</sub>*n<sub>зах</sub>*(π*d<sup>2</sup><sub>вн</sub>/4)</td>
+                  <td id="CSPaste13"></td>
+              </tr>
+              <tr>
+                  <td>Массовая скорость пара</td>
+                  <td>ρW<sup>нов</sup><sub>п</sub></td>
+                  <td>кг/с</td>
+                  <td>D<sub>хс</sub>*1000 / (f<sub>нов</sub>*3600)</td>
+                  <td id="CSPaste14"></td>
+              </tr>
+              <tr>
+                  <td>Скорость пара</td>
+                  <td>W<sub>п</sub></td>
+                  <td>м/с</td>
+                  <td>ρW<sup>нов</sup><sub>п</sub>*υ<sub>п</sub></td>
+                  <td id="CSPaste15"></td>
+              </tr>
+              <tr>
+                  <td>Больший перепад температур</td>
+                  <td>Δt<sub>б</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>θ<sup>'</sup><sub>хс</sub> - t<sup>''</sup><sub>хс</sub></td>
+                  <td id="CSPaste16"></td>
+              </tr>
+              <tr>
+                  <td>Меньший перепад температур</td>
+                  <td>Δt<sub>м</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>θ<sup>''</sup><sub>хс</sub> - t<sup>'</sup><sub>хс</sub></td>
+                  <td id="CSPaste17"></td>
+              </tr>
+              <tr>
+                  <td>Температурный напор</td>
+                  <td>Δt<sub>г</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>(Δt<sub>б</sub> - Δt<sub>м</sub>) / (2.3*lg(Δt<sub>б</sub>/Δt<sub>м</sub>))</td>
+                  <td id="CSPaste18"></td>
+              </tr>
+              <tr>
+                  <td>Проходное сечение по газу</td>
+                  <td>F</td>
+                  <td>м<sup>2</sup></td>
+                  <td>h<sub>хс</sub>*a<sub>s</sub> - b*d<sub>н</sub>*n<sub>зм</sub></td>
+                  <td id="CSPaste19"></td>
+              </tr>
+              <tr>
+                  <td>Скорость газа</td>
+                  <td>W<sub>г</sub></td>
+                  <td>м/с</td>
+                  <td>(B<sub>р</sub>*V<sub>г</sub>*(θ<sub>ср</sub> + 273)) / (3600*F*273)</td>
+                  <td id="CSPaste20"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент теплопередачи</td>
+                  <td>k</td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>Принимаем</td>
+                  <td><input type="text" id="CSField14" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Поверхность теплопередачи</td>
+                  <td>H<sub>г</sub></td>
+                  <td>м<sup>2</sup></td>
+                  <td>B<sub>р</sub>*θ<sub>б</sub> / (k*Δt<sub>хс</sub>)</td>
+                  <td id="CSPaste21"></td>
+              </tr>
+              <tr>
+                  <td>Эффективная толщина излучающего слоя</td>
+                  <td>S</td>
+                  <td>м</td>
+                  <td>0.9*d<sub>н</sub>*((4*S<sub>1</sub>*S<sub>2</sub>) / (π*d<sup>2</sup><sub>н</sub>) - 1)</td>
+                  <td id="CSPaste22"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент ослабления трехатомными газами</td>
+                  <td>k<sub>г</sub></td>
+                  <td>см<sup>2</sup>/м*кгс</td>
+                  <td>По номограмме 3</td>
+                  <td><input type="text" id="CSField15" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент ослабления золовыми частицами</td>
+                  <td>k<sub>зл</sub></td>
+                  <td>см<sup>2</sup>/м*кгс</td>
+                  <td>По номограмме 4</td>
+                  <td><input type="text" id="CSField16" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент ослабления лучей</td>
+                  <td>k</td>
+                  <td>-</td>
+                  <td>k<sub>г</sub>*r<sub>п</sub> + k<sub>зл</sub>*μ<sub>зл</sub></td>
+                  <td id="CSPaste23"></td>
+              </tr>
+              <tr>
+                  <td>Оптическая толщина</td>
+                  <td>k<sub>p</sub>s</td>
+                  <td>-</td>
+                  <td>k*p*S</td>
+                  <td id="CSPaste24"></td>
+              </tr>
+              <tr>
+                  <td>Степень черноты</td>
+                  <td>a<sub>ч</sub></td>
+                  <td>-</td>
+                  <td>1 - e<sup>-k<sub>p</sub>s</sup></td>
+                  <td id="CSPaste25"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент загрязнения</td>
+                  <td>ε</td>
+                  <td>-</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="CSField17" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент тепловой эффективности</td>
+                  <td>ψ</td>
+                  <td>-</td>
+                  <td>По таблице</td>
+                  <td><input type="text" id="CSField18" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Номинальный коэффициент теплоотдачи конвекцией к пару</td>
+                  <td>α<sub>н2</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="CSField19" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Поправка</td>
+                  <td>C<sub>d</sub></td>
+                  <td>-</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="CSField20" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент теплоотдачи конвекцией к пару</td>
+                  <td>α<sub>2</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>α<sub>н2</sub>*C<sub>d</sub></td>
+                  <td id="CSPaste26"></td>
+              </tr>
+              <tr>
+                  <td>Температура загрязнения стенки</td>
+                  <td>t<sub>з</sub></td>
+                  <td><sup>o</sup>C</td>
+                  <td>t<sub>ср</sub> + (ε + 1/α<sub>2</sub>)*B<sub>р</sub>*Q<sub>б</sub>/H<sub>р</sub>)</td>
+                  <td id="CSPaste27"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент теплоотдачи излучением</td>
+                  <td>α<sub>л</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>4.9*10<sup>-8</sup>*a<sub>ч</sub>*(θ<sup>3</sup><sub>ср</sub>+273)*((1 - (t<sub>з</sub>+273/θ<sub>ср</sub>+273)<sup>4</sup>) / (1 - (t<sub>з</sub>+273/θ<sub>ср</sub>+273)))</td>
+                  <td id="CSPaste28"></td>
+              </tr>
+              <tr>
+                  <td>Поправка на число труб по ходу газа</td>
+                  <td>C<sub>z</sub></td>
+                  <td>-</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="CSField21" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Поправка на геометрическую компоновку</td>
+                  <td>C<sub>s</sub></td>
+                  <td>-</td>
+                  <td>[1 + (2*σ<sub>1</sub> - 3)*(1 - σ<sub>2</sub>/2)<sup>3</sup>]<sup>-2</sup></td>
+                  <td id="CSPaste29"></td>
+              </tr>
+              <tr>
+                  <td>Поправка</td>
+                  <td>C<sub>ф</sub></td>
+                  <td>-</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="CSField22" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Номинальный коэффициент теплоотдачи конвекцией от газа</td>
+                  <td>α<sub>нк</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>По номограмме</td>
+                  <td><input type="text" id="CSField23" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент теплоотдачи конвекцией от газа</td>
+                  <td>α<sub>к</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>α<sub>нк</sub>*C<sub>z</sub>*C<sub>s</sub>*C<sub>ф</sub></td>
+                  <td id="CSPaste30"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент использования</td>
+                  <td>ξ</td>
+                  <td>-</td>
+                  <td>По графику</td>
+                  <td><input type="text" id="CSField24" class="form-control"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент теплоотдачи к пару</td>
+                  <td>α<sub>1</sub></td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>ξ*(α<sub>л</sub> + α<sub>к</sub>*π*d<sub>н</sub> / (2*S<sub>2</sub>*ς))</td>
+                  <td id="CSPaste31"></td>
+              </tr>
+              <tr>
+                  <td>Коэффициент теплопередачи</td>
+                  <td>k</td>
+                  <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                  <td>ψ*(α<sub>1</sub> / (1 + α<sub>1</sub>/α<sub>2</sub>))</td>
+                  <td id="CSPaste32"></td>
+              </tr>
+              <tr>
+                  <td>Поверхность теплопередачи</td>
+                  <td>H<sup>расч</sup><sub>г</sub></td>
+                  <td>м<sup>2</sup></td>
+                  <td>B<sub>р</sub>*θ<sub>б</sub> / (k*Δt<sub>хс</sub>)</td>
+                  <td id="CSPaste33"></td>
+              </tr>
+              <tr>
+                  <td>Погрешность</td>
+                  <td>-</td>
+                  <td>%</td>
+                  <td>[ |(H<sup>расч</sup><sub>г</sub> - H<sub>г</sub>) / H<sup>расч</sup><sub>г</sub>| ]*100%</td>
+                  <td id="CSPaste34"></td>
+              </tr>
+              <tr>
+                  <td>Длина змеевика</td>
+                  <td>l<sub>зм</sub></td>
+                  <td>м</td>
+                  <td>H<sup>расч</sup><sub>г</sub> / π*d<sub>н</sub>*n<sub>зм</sub>*n<sub>зах</sub></td>
+                  <td id="CSPaste35"></td>
+              </tr>
+              <tr>
+                  <td>Число прямых участков</td>
+                  <td>n<sub>пр</sub></td>
+                  <td>-</td>
+                  <td>H<sup>расч</sup><sub>г</sub> / π*d<sub>н</sub>*h<sub>хс</sub>*n<sub>зм</sub>*n<sub>зах</sub></td>
+                  <td id="CSPaste36"></td>
+              </tr>
+
+          </table>
+         <button class="btn btn-info ok okcalculationColdStep">Ok</button>
+      </div>
+
+    </div>
+
+    <!--Расчет конвективного пароперегревателя (холодная ступень)-->
+
+    <div id="Economizer2step" hidden>
+      <p class='part' align='center'>8</p>
+      <h3>Расчет экономайзера II ступени</h3>
+      <span>(Сначала заполните необходимые данные и нажмите <span style="color:red; font-size:30px;">ок</span>)</span>
+   </div>
+
+   <!--Расчет экономайзера II ступени-->
+
+   <div class="row calculationEconomizer2" hidden>
+
+     <div class="col-lg-12">
+          <table border="1">
+             <tr>
+                 <td><b>Расчитываемая величина</b></td>
+                 <td><b>Обозначение</b></td>
+                 <td><b>Размерность</b></td>
+                 <td><b>Формула</b></td>
+                 <td><b>Результат</b></td>
+             </tr>
+             <tr>
+                 <td>Энтальпия воды на входе в экономайзер</td>
+                 <td>i<sup>'</sup></td>
+                 <td>Ккал/кг</td>
+                 <td>Схема пароводяного тракта</td>
+                 <td><input type="text" id="E2Field1" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Энтальпия воды на выходе из экономайзера</td>
+                 <td>i<sup>''</sup></td>
+                 <td>Ккал/кг</td>
+                 <td>Схема пароводяного тракта</td>
+                 <td><input type="text" id="E2Field2" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Разность энтальпий воды</td>
+                 <td>Δi</td>
+                 <td>Ккал/кг</td>
+                 <td>i<sup>''</sup> - i<sup>'</sup></td>
+                 <td id="E2Paste1"></td>
+             </tr>
+             <tr>
+                 <td>Среднее давление в экономайзере</td>
+                 <td>p<sub>ср</sub></td>
+                 <td>кгс/см<sup>2</sup></td>
+                 <td>Схема пароводяного тракта</td>
+                 <td><input type="text" id="E2Field2miss" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Температура воды на входе в экономайзер</td>
+                 <td>t<sup>'</sup></td>
+                 <td><sup>o</sup>C</td>
+                 <td>Схема пароводяного тракта</td>
+                 <td><input type="text" id="E2Field3" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Температура пара на выходе из экономайзера</td>
+                 <td>t<sup>''</sup></td>
+                 <td><sup>o</sup>C</td>
+                 <td>Схема пароводяного тракта</td>
+                 <td><input type="text" id="E2Field4" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Средняя температура по пару</td>
+                 <td>t<sub>ср</sub></td>
+                 <td><sup>o</sup>C</td>
+                 <td>(t<sup>'</sup> + t<sup>''</sup>)/2</td>
+                 <td id="E2Paste2"></td>
+             </tr>
+             <tr>
+                 <td>Расход пара через экономайзер</td>
+                 <td>D<sub>эк</sub></td>
+                 <td>т/ч</sup></td>
+                 <td>Схема пароводяного тракта</td>
+                 <td><input type="text" id="E2Field5" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Энтальпия газов на входе в экономайзер</td>
+                 <td>I<sup>'</sup></td>
+                 <td>Ккал/кг</td>
+                 <td>I<sup>'</sup> = I<sup>''</sup><sub>хс</sub></td>
+                 <td id="E2Paste3"></td>
+             </tr>
+             <tr>
+                 <td>Температура газа на входе в экономайзер</td>
+                 <td>θ<sup>'</sup></td>
+                 <td><sup>o</sup>C</td>
+                 <td>θ<sup>'</sup> = θ<sup>''</sup><sub>хс</sub></td>
+                 <td id="E2Paste4"></td>
+             </tr>
+             <tr>
+                 <td>Балансовое тепло, передаваемое в экономайзере</td>
+                 <td>Q<sub>б</sub></td>
+                 <td>Ккал/кг</td>
+                 <td>D<sub>эк</sub>*Δi / B<sub>р</sub></td>
+                 <td id="E2Paste5"></td>
+             </tr>
+             <tr>
+                 <td>Энтальпия газов на выходе из экономайзера</td>
+                 <td>I<sup>''</sup></td>
+                 <td>Ккал/кг</td>
+                 <td>(φ*I<sup>'</sup> - Q<sub>б</sub>)/φ</td>
+                 <td id="E2Paste6"></td>
+             </tr>
+             <tr>
+                 <td>Температура газа на выходе из экономайзера</td>
+                 <td>θ<sup>''</sup></td>
+                 <td><sup>o</sup>C</td>
+                 <td>По таблице</td>
+                 <td><input type="text" id="E2Field5miss" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Средняя температура газа в экономайзере</td>
+                 <td>θ<sub>ср</sub></td>
+                 <td>кгс/см<sup>2</sup></td>
+                 <td>(θ<sup>'</sup> + θ<sup>''</sup>)/2</td>
+                 <td id="E2Paste7"></td>
+             </tr>
+             <tr>
+                 <td>Удельный объем воды</td>
+                 <td>υ<sub>в</sub></td>
+                 <td>м<sup>3</sup>/кг</td>
+                 <td>По таблице</td>
+                 <td><input type="text" id="E2Field6" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Внешний диаметр труб</td>
+                 <td>d<sub>н</sub></td>
+                 <td>м</td>
+                 <td>Принимаем</td>
+                 <td><input type="text" id="E2Field7" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Внутренний диаметр труб</td>
+                 <td>d<sub>вн</sub></td>
+                 <td>м</td>
+                 <td>Принимаем</td>
+                 <td><input type="text" id="E2Field8" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Поперечный шаг</td>
+                 <td>S<sub>1</sub></td>
+                 <td>м</td>
+                 <td>Принимаем</td>
+                 <td><input type="text" id="E2Field9" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Продольный шаг</td>
+                 <td>S<sub>2</sub></td>
+                 <td>м</td>
+                 <td>Принимаем</td>
+                 <td><input type="text" id="E2Field10" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Относительный поперечный шаг</td>
+                 <td>σ<sub>1</sub></td>
+                 <td>-</td>
+                 <td>S<sub>1</sub> / d <sub>н</sub></td>
+                 <td id="E2Paste8"></td>
+             </tr>
+             <tr>
+                 <td>Относительный продольный шаг</td>
+                 <td>σ<sub>2</sub></td>
+                 <td>-</td>
+                 <td>S<sub>2</sub> / d <sub>н</sub></td>
+                 <td id="E2Paste9"></td>
+             </tr>
+             <tr>
+                 <td>Глубина конвективной шахты</td>
+                 <td>l<sub>кш</sub></td>
+                 <td>м</td>
+                 <td>Из геометрии</td>
+                 <td><input type="text" id="E2Field11" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Число змеевиков</td>
+                 <td>n<sub>зм</sub></td>
+                 <td>-</td>
+                 <td>l<sub>кш</sub>/S<sub>1</sub> - 1</td>
+                 <td id="E2Paste10"></td>
+             </tr>
+             <tr>
+                 <td>Массовая скорость воды</td>
+                 <td>ρW</td>
+                 <td>кг/с</td>
+                 <td>Принимаем</td>
+                 <td><input type="text" id="E2Field12" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Проходное сечение по воде</td>
+                 <td>f</td>
+                 <td>м<sup>2</sup></td>
+                 <td>(D<sub>эк</sub>*1000) / (3600*ρW)</td>
+                 <td id="E2Paste11"></td>
+             </tr>
+             <tr>
+                 <td>Количество заходов</td>
+                 <td>n<sub>зах</sub></td>
+                 <td>-</td>
+                 <td>4*f / (π*d<sup>2</sup><sub>вн</sub>*n<sub>зм</sub>*2)</td>
+                 <td id="E2Paste12"></td>
+             </tr>
+             <tr>
+                 <td>Проходное сечение по воде (пересчет)</td>
+                 <td>f<sub>нов</sub></td>
+                 <td>м<sup>2</sup></td>
+                 <td>2*n<sub>зм</sub>*n<sub>зах</sub>*(π*d<sup>2</sup><sub>вн</sub>/4)</td>
+                 <td id="E2Paste13"></td>
+             </tr>
+             <tr>
+                 <td>Массовая скорость воды</td>
+                 <td>ρW<sup>нов</sup></td>
+                 <td>кг/с</td>
+                 <td>D<sub>эк</sub>*1000 / (f<sub>нов</sub>*3600)</td>
+                 <td id="E2Paste14"></td>
+             </tr>
+             <tr>
+                 <td>Скорость воды</td>
+                 <td>W<sub>в</sub></td>
+                 <td>м/с</td>
+                 <td>ρW<sup>нов</sup>*υ<sub>в</sub></td>
+                 <td id="E2Paste15"></td>
+             </tr>
+             <tr>
+                 <td>Больший перепад температур</td>
+                 <td>Δt<sub>б</sub></td>
+                 <td><sup>o</sup>C</td>
+                 <td>θ<sup>'</sup>- t<sup>''</sup></td>
+                 <td id="E2Paste16"></td>
+             </tr>
+             <tr>
+                 <td>Меньший перепад температур</td>
+                 <td>Δt<sub>м</sub></td>
+                 <td><sup>o</sup>C</td>
+                 <td>θ<sup>''</sup> - t<sup>'</sup></td>
+                 <td id="E2Paste17"></td>
+             </tr>
+             <tr>
+                 <td>Среднелогарифмический напор</td>
+                 <td>Δt<sub>г</sub></td>
+                 <td><sup>o</sup>C</td>
+                 <td>(Δt<sub>б</sub> - Δt<sub>м</sub>) / (2.3*lg(Δt<sub>б</sub>/Δt<sub>м</sub>))</td>
+                 <td id="E2Paste18"></td>
+             </tr>
+             <tr>
+                 <td>Проходное сечение по газу</td>
+                 <td>F</td>
+                 <td>м<sup>2</sup></td>
+                 <td>a<sub>s</sub>*l<sub>кш</sub> - d<sub>н</sub>*n<sub>зм</sub>*a<sub>s</sub></td>
+                 <td id="E2Paste19"></td>
+             </tr>
+             <tr>
+                 <td>Скорость газа</td>
+                 <td>W<sub>г</sub></td>
+                 <td>м/с</td>
+                 <td>(B<sub>р</sub>*V<sub>г</sub>*(θ<sub>ср</sub> + 273)) / (3600*F*273)</td>
+                 <td id="E2Paste20"></td>
+             </tr>
+             <tr>
+                 <td>Коэффициент теплопередачи</td>
+                 <td>k</td>
+                 <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                 <td>Принимаем</td>
+                 <td><input type="text" id="E2Field13" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Поверхность теплопередачи</td>
+                 <td>H<sub>г</sub></td>
+                 <td>м<sup>2</sup></td>
+                 <td>B<sub>р</sub>*θ<sub>б</sub> / (k*Δt<sub>г</sub>)</td>
+                 <td id="E2Paste21"></td>
+             </tr>
+             <tr>
+                 <td>Эффективная толщина излучающего слоя</td>
+                 <td>S</td>
+                 <td>м</td>
+                 <td>0.9*d<sub>н</sub>*((4*S<sub>1</sub>*S<sub>2</sub>) / (π*d<sup>2</sup><sub>н</sub>) - 1)</td>
+                 <td id="E2Paste22"></td>
+             </tr>
+             <tr>
+                 <td>Коэффициент ослабления трехатомными газами</td>
+                 <td>k<sub>г</sub></td>
+                 <td>см<sup>2</sup>/м*кгс</td>
+                 <td>По номограмме 3</td>
+                 <td><input type="text" id="E2Field14" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Коэффициент ослабления золовыми частицами</td>
+                 <td>k<sub>зл</sub></td>
+                 <td>см<sup>2</sup>/м*кгс</td>
+                 <td>По номограмме 4</td>
+                 <td><input type="text" id="E2Field15" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Коэффициент ослабления лучей</td>
+                 <td>k</td>
+                 <td>-</td>
+                 <td>k<sub>г</sub>*r<sub>п</sub> + k<sub>зл</sub>*μ<sub>зл</sub></td>
+                 <td id="E2Paste23"></td>
+             </tr>
+             <tr>
+                 <td>Оптическая толщина</td>
+                 <td>k<sub>p</sub>s</td>
+                 <td>-</td>
+                 <td>k*p*S</td>
+                 <td id="E2Paste24"></td>
+             </tr>
+             <tr>
+                 <td>Степень черноты</td>
+                 <td>a<sub>ч</sub></td>
+                 <td>-</td>
+                 <td>1 - e<sup>-k<sub>p</sub>s</sup></td>
+                 <td id="E2Paste25"></td>
+             </tr>
+             <tr>
+                 <td>Коэффициент тепловой эффективности</td>
+                 <td>ψ</td>
+                 <td>-</td>
+                 <td>По таблице</td>
+                 <td><input type="text" id="E2Field16" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Поправка</td>
+                 <td>Δt<sub>эк</sub></td>
+                 <td><sup>o</sup>C</td>
+                 <td>По графику</td>
+                 <td><input type="text" id="E2Field16miss" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Номинальный коэффициент теплоотдачи конвекцией к воде</td>
+                 <td>α<sub>н2</sub></td>
+                 <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                 <td>По номограмме</td>
+                 <td><input type="text" id="E2Field17" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Поправка</td>
+                 <td>C<sub>t</sub></td>
+                 <td>-</td>
+                 <td>По номограмме</td>
+                 <td><input type="text" id="E2Field18" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Коэффициент теплоотдачи конвекцией к воде</td>
+                 <td>α<sub>2</sub></td>
+                 <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                 <td>α<sub>н2</sub>*C<sub>t</sub></td>
+                 <td id="E2Paste26"></td>
+             </tr>
+             <tr>
+                 <td>Температура загрязнения стенки</td>
+                 <td>t<sub>з</sub></td>
+                 <td><sup>o</sup>C</td>
+                 <td>t<sub>ср</sub> + Δt<sub>эк</sub></td>
+                 <td id="E2Paste27"></td>
+             </tr>
+             <tr>
+                 <td>Номинальный коэффициент теплоотдачи излучением</td>
+                 <td>α<sub>нл</sub></td>
+                 <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                 <td>По номограмме</td>
+                 <td><input type="text" id="E2Field19" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Коэффициент теплоотдачи излучением</td>
+                 <td>α<sub>л</sub></td>
+                 <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                 <td>α<sub>нл</sub>*a<sub>ч</sub></td>
+                 <td id="E2Paste28"></td>
+             </tr>
+             <tr>
+                 <td>Поправка на число труб по ходу газа</td>
+                 <td>C<sub>z</sub></td>
+                 <td>-</td>
+                 <td>По номограмме</td>
+                 <td><input type="text" id="E2Field20" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Поправка на геометрическую компоновку</td>
+                 <td>C<sub>s</sub></td>
+                 <td>-</td>
+                 <td>[1 + (2*σ<sub>1</sub> - 3)*(1 - σ<sub>2</sub>/2)<sup>3</sup>]<sup>-2</sup></td>
+                 <td id="E2Paste29"></td>
+             </tr>
+             <tr>
+                 <td>Поправка</td>
+                 <td>C<sub>ф</sub></td>
+                 <td>-</td>
+                 <td>По номограмме</td>
+                 <td><input type="text" id="E2Field21" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Номинальный коэффициент теплоотдачи конвекцией</td>
+                 <td>α<sub>нк</sub></td>
+                 <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                 <td>По номограмме</td>
+                 <td><input type="text" id="E2Field22" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Коэффициент теплоотдачи конвекцией</td>
+                 <td>α<sub>к</sub></td>
+                 <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                 <td>α<sub>нк</sub>*C<sub>z</sub>*C<sub>s</sub>*C<sub>ф</sub></td>
+                 <td id="E2Paste30"></td>
+             </tr>
+             <tr>
+                 <td>Коэффициент использования</td>
+                 <td>ξ</td>
+                 <td>-</td>
+                 <td>По графику</td>
+                 <td><input type="text" id="E2Field23" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Коэффициент теплоотдачи к воде</td>
+                 <td>α<sub>1</sub></td>
+                 <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                 <td>ξ*(α<sub>л</sub> + α<sub>к</sub>)</td>
+                 <td id="E2Paste31"></td>
+             </tr>
+             <tr>
+                 <td>Коэффициент теплопередачи</td>
+                 <td>k</td>
+                 <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                 <td>ψ*α<sub>1</sub></td>
+                 <td id="E2Paste32"></td>
+             </tr>
+             <tr>
+                 <td>Поверхность теплопередачи</td>
+                 <td>H<sup>расч</sup><sub>г</sub></td>
+                 <td>м<sup>2</sup></td>
+                 <td>B<sub>р</sub>*θ<sub>б</sub> / (k*Δt<sub>г</sub>)</td>
+                 <td id="E2Paste33"></td>
+             </tr>
+             <tr>
+                 <td>Погрешность</td>
+                 <td>-</td>
+                 <td>%</td>
+                 <td>[ |(H<sub>г</sub> - H<sup>расч</sup><sub>г</sub>) / H<sub>г</sub>| ]*100%</td>
+                 <td id="E2Paste34"></td>
+             </tr>
+             <tr>
+                 <td>Длина змеевика</td>
+                 <td>l<sub>зм</sub></td>
+                 <td>м</td>
+                 <td>H<sup>расч</sup><sub>г</sub> / π*d<sub>н</sub>*n<sub>зм</sub>*n<sub>зах</sub></td>
+                 <td id="E2Paste35"></td>
+             </tr>
+             <tr>
+                 <td>Число прямых участков</td>
+                 <td>n<sub>пр</sub></td>
+                 <td>-</td>
+                 <td>Принимаем</td>
+                 <td><input type="text" id="E2Field24" class="form-control"></td>
+             </tr>
+             <tr>
+                 <td>Глубина пакета</td>
+                 <td>b</td>
+                 <td>м</td>
+                 <td>2*S<sub>2</sub>*(n<sub>пр</sub> - 1) + n<sub>пр</sub>*d<sub>н</sub> + S<sub>2</sub></td>
+                 <td id="E2Paste36"></td>
+             </tr>
+
+
+
+         </table>
+        <button class="btn btn-info ok okcalculationEconomizer2">Ok</button>
+     </div>
+
+   </div>
+
+   <!--Расчет экономайзера II ступени-->
+
+   <div id="AirHeater2Step" hidden>
+     <p class='part' align='center'>9</p>
+     <h3>Расчет воздухоподогревателя II ступени</h3>
+     <span>(Сначала заполните необходимые данные и нажмите <span style="color:red; font-size:30px;">ок</span>)</span>
+  </div>
+
+  <!--Расчет воздухоподогревателя II ступени-->
+
+  <div class="row calculationAirHeater2" hidden>
+
+    <div class="col-lg-12">
+         <table border="1">
+            <tr>
+                <td><b>Расчитываемая величина</b></td>
+                <td><b>Обозначение</b></td>
+                <td><b>Размерность</b></td>
+                <td><b>Формула</b></td>
+                <td><b>Результат</b></td>
+            </tr>
+            <tr>
+                <td>Энтальпия воздуха на входе</td>
+                <td>i<sup>'</sup></td>
+                <td>Ккал/кг</td>
+                <td>По таблице</td>
+                <td><input type="text" id="AH2Field1" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Энтальпия воздуха на выходе</td>
+                <td>i<sup>''</sup></td>
+                <td>Ккал/кг</td>
+                <td>По таблице</td>
+                <td><input type="text" id="AH2Field2" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Разность энтальпий воздуха</td>
+                <td>Δi</td>
+                <td>Ккал/кг</td>
+                <td>i<sup>''</sup> - i<sup>'</sup></td>
+                <td id="AH2Paste1"></td>
+            </tr>
+            <tr>
+                <td>Температура воздуха на входе</td>
+                <td>t<sup>'</sup></td>
+                <td><sup>o</sup>C</td>
+                <td>Принимаем</td>
+                <td><input type="text" id="AH2Field3" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Температура воздуха на выходе</td>
+                <td>t<sup>''</sup></td>
+                <td><sup>o</sup>C</td>
+                <td>Принимаем</td>
+                <td><input type="text" id="AH2Field4" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Средняя температура воздуха в воздухоподогревателе</td>
+                <td>t<sub>ср</sub></td>
+                <td><sup>o</sup>C</td>
+                <td>(t<sup>'</sup> + t<sup>''</sup>)/2</td>
+                <td id="AH2Paste2"></td>
+            </tr>
+            <tr>
+                <td>Энтальпия газов на входе</td>
+                <td>I<sup>'</sup></td>
+                <td>Ккал/кг</td>
+                <td>I<sup>'</sup> = I<sup>''</sup><sub>экII</sub></td>
+                <td id="AH2Paste3"></td>
+            </tr>
+            <tr>
+                <td>Температура газа на входе</td>
+                <td>θ<sup>'</sup></td>
+                <td><sup>o</sup>C</td>
+                <td>θ<sup>'</sup> = θ<sup>''</sup><sub>экII</sub></td>
+                <td id="AH2Paste4"></td>
+            </tr>
+            <tr>
+                <td>Стехиометрический коэффициент</td>
+                <td>β</td>
+                <td>-</td>
+                <td>α - Δα<sub>пл</sub></td>
+                <td id="AH2Paste5"></td>
+            </tr>
+            <tr>
+                <td>Присос воздуха</td>
+                <td>Δα</td>
+                <td>-</td>
+                <td>По таблице</td>
+                <td><input type="text" id="AH2Field5" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Балансовое тепло, передаваемое в воздухоподогревателе</td>
+                <td>Q<sub>б</sub></td>
+                <td>Ккал/кг</td>
+                <td>(β + Δα/2)*Δi</td>
+                <td id="AH2Paste6"></td>
+            </tr>
+            <tr>
+                <td>Энтальпия газов на выходе</td>
+                <td>I<sup>''</sup></td>
+                <td>Ккал/кг</td>
+                <td>(φ*I<sup>'</sup> - Q<sub>б</sub>)/φ + I<sub>хв</sub>*Δα/2</td>
+                <td id="AH2Paste7"></td>
+            </tr>
+            <tr>
+                <td>Температура газа на выходе</td>
+                <td>θ<sup>''</sup></td>
+                <td><sup>o</sup>C</td>
+                <td>По таблице</td>
+                <td><input type="text" id="AH2Field6" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Средняя температура газов в воздухоподогревателе</td>
+                <td>θ<sub>ср</sub></td>
+                <td>кгс/см<sup>2</sup></td>
+                <td>(θ<sup>'</sup> + θ<sup>''</sup>)/2</td>
+                <td id="AH2Paste8"></td>
+            </tr>
+            <tr>
+                <td>Внешний диаметр труб</td>
+                <td>d<sub>н</sub></td>
+                <td>м</td>
+                <td>Принимаем</td>
+                <td><input type="text" id="AH2Field7" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Внутренний диаметр труб</td>
+                <td>d<sub>вн</sub></td>
+                <td>м</td>
+                <td>Принимаем</td>
+                <td><input type="text" id="AH2Field8" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Поперечный шаг</td>
+                <td>S<sub>1</sub></td>
+                <td>м</td>
+                <td>Принимаем</td>
+                <td><input type="text" id="AH2Field9" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Продольный шаг</td>
+                <td>S<sub>2</sub></td>
+                <td>м</td>
+                <td>Принимаем</td>
+                <td><input type="text" id="AH2Field10" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Относительный поперечный шаг</td>
+                <td>σ<sub>1</sub></td>
+                <td>-</td>
+                <td>S<sub>1</sub> / d <sub>н</sub></td>
+                <td id="AH2Paste9"></td>
+            </tr>
+            <tr>
+                <td>Относительный продольный шаг</td>
+                <td>σ<sub>2</sub></td>
+                <td>-</td>
+                <td>S<sub>2</sub> / d <sub>н</sub></td>
+                <td id="AH2Paste10"></td>
+            </tr>
+            <tr>
+                <td>Число труб в ряду</td>
+                <td>n<sub>тр.ряд</sub></td>
+                <td>-</td>
+                <td>a<sub>s</sub>/S<sub>1</sub> - 1</td>
+                <td id="AH2Paste11"></td>
+            </tr>
+            <tr>
+                <td>Число рядов</td>
+                <td>n<sub>рядов</sub></td>
+                <td>-</td>
+                <td>l<sub>кш</sub>/S<sub>2</sub> - 1</td>
+                <td id="AH2Paste12"></td>
+            </tr>
+            <tr>
+                <td>Суммарное число труб</td>
+                <td>N<sub>∑</sub></td>
+                <td>-</td>
+                <td>n<sub>тр.ряд</sub>*n<sub>рядов</sub></td>
+                <td id="AH2Paste12miss"></td>
+            </tr>
+            <tr>
+                <td>Проходное сечение по газу</td>
+                <td>F</td>
+                <td>м<sup>2</sup></td>
+                <td>N<sub>∑</sub>*π*d<sup>2</sup><sub>вн</sub> / 4</td>
+                <td id="AH2Paste13"></td>
+            </tr>
+            <tr>
+                <td>Скорость газа</td>
+                <td>W<sub>г</sub></td>
+                <td>м/с</td>
+                <td>(B<sub>р</sub>*V<sub>г</sub>*(θ<sub>ср</sub> + 273)) / (3600*F*273)</td>
+                <td id="AH2Paste14"></td>
+            </tr>
+            <tr>
+                <td>Скорость воздуха</td>
+                <td>W<sub>в</sub></td>
+                <td>м/с</td>
+                <td>Принимаем</td>
+                <td><input type="text" id="AH2Field11" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Больший перепад температур</td>
+                <td>Δt<sub>б</sub></td>
+                <td><sup>o</sup>C</td>
+                <td>θ<sup>''</sup>- t<sup>'</sup></td>
+                <td id="AH2Paste15"></td>
+            </tr>
+            <tr>
+                <td>Меньший перепад температур</td>
+                <td>Δt<sub>м</sub></td>
+                <td><sup>o</sup>C</td>
+                <td>θ<sup>'</sup> - t<sup>''</sup></td>
+                <td id="AH2Paste16"></td>
+            </tr>
+            <tr>
+                <td>Среднелогарифмический напор для противотока</td>
+                <td>Δt<sub>пр</sub></td>
+                <td><sup>o</sup>C</td>
+                <td>(Δt<sub>б</sub> - Δt<sub>м</sub>) / (2.3*lg(Δt<sub>б</sub>/Δt<sub>м</sub>))</td>
+                <td id="AH2Paste17"></td>
+            </tr>
+            <tr>
+                <td>Коэффициент пересчета от противоточной схемы к более сложной</td>
+                <td>ψ</td>
+                <td>-</td>
+                <td>По номограмме</td>
+                <td><input type="text" id="AH2Field12" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Среднелогарифмический напор</td>
+                <td>Δt<sub>ср</sub></td>
+                <td><sup>o</sup>C</td>
+                <td>ψ*Δt<sub>пр</sub></td>
+                <td id="AH2Paste18"></td>
+            </tr>
+            <tr>
+                <td>Эффективная толщина излучающего слоя</td>
+                <td>S</td>
+                <td>м</td>
+                <td>0.9*d<sub>н</sub>*((4*S<sub>1</sub>*S<sub>2</sub>) / (π*d<sup>2</sup><sub>н</sub>) - 1)</td>
+                <td id="AH2Paste19"></td>
+            </tr>
+            <tr>
+                <td>Коэффициент ослабления трехатомными газами</td>
+                <td>k<sub>г</sub></td>
+                <td>см<sup>2</sup>/м*кгс</td>
+                <td>По номограмме 3</td>
+                <td><input type="text" id="AH2Field13" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Коэффициент ослабления золовыми частицами</td>
+                <td>k<sub>зл</sub></td>
+                <td>см<sup>2</sup>/м*кгс</td>
+                <td>По номограмме 4</td>
+                <td><input type="text" id="AH2Field14" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Коэффициент ослабления лучей</td>
+                <td>k</td>
+                <td>-</td>
+                <td>k<sub>г</sub>*r<sub>п</sub> + k<sub>зл</sub>*μ<sub>зл</sub></td>
+                <td id="AH2Paste20"></td>
+            </tr>
+            <tr>
+                <td>Оптическая толщина</td>
+                <td>k<sub>p</sub>s</td>
+                <td>-</td>
+                <td>k*p*S</td>
+                <td id="AH2Paste21"></td>
+            </tr>
+            <tr>
+                <td>Степень черноты</td>
+                <td>a<sub>ч</sub></td>
+                <td>-</td>
+                <td>1 - e<sup>-k<sub>p</sub>s</sup></td>
+                <td id="AH2Paste22"></td>
+            </tr>
+            <tr>
+                <td>Температура загрязнения стенки</td>
+                <td>t<sub>з</sub></td>
+                <td><sup>o</sup>C</td>
+                <td>(θ<sub>ср</sub> + t<sub>ср</sub>) / 2</td>
+                <td id="AH2Paste23"></td>
+            </tr>
+            <tr>
+                <td>Номинальный коэффициент теплоотдачи излучением</td>
+                <td>α<sub>нл</sub></td>
+                <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                <td>По номограмме</td>
+                <td><input type="text" id="AH2Field15" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Коэффициент теплоотдачи излучением</td>
+                <td>α<sub>л</sub></td>
+                <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                <td>a<sub>ч</sub>*α<sub>нл</sub></td>
+                <td id="AH2Paste24"></td>
+            </tr>
+            <tr>
+                <td>Коэффициент теплоотдачи конвекцией к воздуху</td>
+                <td>α<sub>2</sub></td>
+                <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                <td>α<sub>н2</sub>*C<sub>ф</sub>*C<sub>z</sub>*C<sub>s</sub></td>
+                <td id="AH2Paste25"></td>
+            </tr>
+            <tr>
+                <td>Номинальный коэффициент теплоотдачи конвекцией к воздуху</td>
+                <td>α<sub>н2</sub></td>
+                <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                <td>По номограмме</td>
+                <td><input type="text" id="AH2Field16" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Поправка на число рядов</td>
+                <td>C<sub>z</sub></td>
+                <td>-</td>
+                <td>По номограмме</td>
+                <td><input type="text" id="AH2Field17" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Поправка на геометрическую компоновку</td>
+                <td>C<sub>s</sub></td>
+                <td>-</td>
+                <td>[1 + (2*σ<sub>1</sub> - 3)*(1 - σ<sub>2</sub>/2)<sup>3</sup>]<sup>-2</sup></td>
+                <td id="AH2Paste26"></td>
+            </tr>
+            <tr>
+                <td>Поправка</td>
+                <td>C<sub>ф</sub></td>
+                <td>-</td>
+                <td>По номограмме</td>
+                <td><input type="text" id="AH2Field18" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Номинальный коэффициент теплоотдачи конвекцией от газа</td>
+                <td>α<sub>нк</sub></td>
+                <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                <td>По номограмме</td>
+                <td><input type="text" id="AH2Field19" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Поправка</td>
+                <td>C<sub>ф</sub></td>
+                <td>-</td>
+                <td>По номограмме</td>
+                <td><input type="text" id="AH2Field20" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Поправка</td>
+                <td>C<sub>l</sub></td>
+                <td>-</td>
+                <td>По номограмме</td>
+                <td><input type="text" id="AH2Field21" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Коэффициент теплоотдачи конвекцией от газа</td>
+                <td>α<sub>к</sub></td>
+                <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                <td>α<sub>нк</sub>*C<sub>ф</sub>*C<sub>l</sub></td>
+                <td id="AH2Paste27"></td>
+            </tr>
+            <tr>
+                <td>Коэффициент использования</td>
+                <td>ξ</td>
+                <td>-</td>
+                <td>По графику</td>
+                <td><input type="text" id="AH2Field22" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Коэффициент теплоотдачи</td>
+                <td>α<sub>1</sub></td>
+                <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                <td>α<sub>к</sub> + α<sub>л</sub></td>
+                <td id="AH2Paste28"></td>
+            </tr>
+            <tr>
+                <td>Коэффициент теплопередачи</td>
+                <td>k</td>
+                <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+                <td>ψ*α<sub>1</sub>*α<sub>2</sub> / (α<sub>1</sub> + α<sub>2</sub>)</td>
+                <td id="AH2Paste29"></td>
+            </tr>
+            <tr>
+                <td>Поверхность теплопередачи</td>
+                <td>H<sub>г</sub></td>
+                <td>м<sup>2</sup></td>
+                <td>B<sub>р</sub>*θ<sub>б</sub> / (k*Δt<sub>пр</sub>)</td>
+                <td id="AH2Paste30"></td>
+            </tr>
+            <tr>
+                <td>Средний диаметр</td>
+                <td>d<sub>ср</sub></td>
+                <td>м</td>
+                <td>(d<sub>н</sub> + d<sub>вн</sub>) / 2</td>
+                <td id="AH2Paste31"></td>
+            </tr>
+            <tr>
+                <td>Глубина пакета</td>
+                <td>h<sub>впII</sub></td>
+                <td>м</td>
+                <td>H<sub>г</sub> / (π*d<sub>ср</sub>*N<sub>∑</sub>)</td>
+                <td id="AH2Paste32"></td>
+            </tr>
+
+
+        </table>
+       <button class="btn btn-info ok okcalculationAirHeater2">Ok</button>
+    </div>
+
+  </div>
+
+  <!--Расчет воздухоподогревателя II ступени-->
+
+  <div id="Economizer1step" hidden>
+    <p class='part' align='center'>10</p>
+    <h3>Расчет экономайзера I ступени</h3>
+    <span>(Сначала заполните необходимые данные и нажмите <span style="color:red; font-size:30px;">ок</span>)</span>
+ </div>
+
+ <!--Расчет экономайзера I ступени-->
+
+ <div class="row calculationEconomizer1" hidden>
+
+   <div class="col-lg-12">
+     <table border="1">
+        <tr>
+            <td><b>Расчитываемая величина</b></td>
+            <td><b>Обозначение</b></td>
+            <td><b>Размерность</b></td>
+            <td><b>Формула</b></td>
+            <td><b>Результат</b></td>
+        </tr>
+        <tr>
+            <td>Энтальпия воды на входе в экономайзер</td>
+            <td>i<sup>'</sup></td>
+            <td>Ккал/кг</td>
+            <td>Схема пароводяного тракта</td>
+            <td><input type="text" id="E1Field1" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Энтальпия воды на выходе из экономайзера</td>
+            <td>i<sup>''</sup></td>
+            <td>Ккал/кг</td>
+            <td>Схема пароводяного тракта</td>
+            <td><input type="text" id="E1Field2" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Разность энтальпий воды</td>
+            <td>Δi</td>
+            <td>Ккал/кг</td>
+            <td>i<sup>''</sup> - i<sup>'</sup></td>
+            <td id="E1Paste1"></td>
+        </tr>
+        <tr>
+            <td>Среднее давление в экономайзере</td>
+            <td>p<sub>ср</sub></td>
+            <td>кгс/см<sup>2</sup></td>
+            <td>Схема пароводяного тракта</td>
+            <td><input type="text" id="E1Field2miss" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Температура воды на входе в экономайзер</td>
+            <td>t<sup>'</sup></td>
+            <td><sup>o</sup>C</td>
+            <td>Схема пароводяного тракта</td>
+            <td><input type="text" id="E1Field3" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Температура пара на выходе из экономайзера</td>
+            <td>t<sup>''</sup></td>
+            <td><sup>o</sup>C</td>
+            <td>Схема пароводяного тракта</td>
+            <td><input type="text" id="E1Field4" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Средняя температура по пару</td>
+            <td>t<sub>ср</sub></td>
+            <td><sup>o</sup>C</td>
+            <td>(t<sup>'</sup> + t<sup>''</sup>)/2</td>
+            <td id="E1Paste2"></td>
+        </tr>
+        <tr>
+            <td>Расход пара через экономайзер</td>
+            <td>D<sub>эк</sub></td>
+            <td>т/ч</sup></td>
+            <td>Схема пароводяного тракта</td>
+            <td><input type="text" id="E1Field5" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Энтальпия газов на входе в экономайзер</td>
+            <td>I<sup>'</sup></td>
+            <td>Ккал/кг</td>
+            <td>I<sup>'</sup> = I<sup>''</sup><sub>впII</sub></td>
+            <td id="E1Paste3"></td>
+        </tr>
+        <tr>
+            <td>Температура газа на входе в экономайзер</td>
+            <td>θ<sup>'</sup></td>
+            <td><sup>o</sup>C</td>
+            <td>θ<sup>'</sup> = θ<sup>''</sup><sub>впII</sub></td>
+            <td id="E1Paste4"></td>
+        </tr>
+        <tr>
+            <td>Присос воздуха</td>
+            <td>Δα</td>
+            <td>-</td>
+            <td>По таблице</td>
+            <td><input type="text" id="E1Field5miss1" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Балансовое тепло, передаваемое в экономайзере</td>
+            <td>Q<sub>б</sub></td>
+            <td>Ккал/кг</td>
+            <td>D<sub>эк</sub>*Δi / B<sub>р</sub></td>
+            <td id="E1Paste5"></td>
+        </tr>
+        <tr>
+            <td>Энтальпия газов на выходе из экономайзера</td>
+            <td>I<sup>''</sup></td>
+            <td>Ккал/кг</td>
+            <td>(φ*I<sup>'</sup> - Q<sub>б</sub>)/φ + Δα*I<sub>хв</sub></td>
+            <td id="E1Paste6"></td>
+        </tr>
+        <tr>
+            <td>Температура газа на выходе из экономайзера</td>
+            <td>θ<sup>''</sup></td>
+            <td><sup>o</sup>C</td>
+            <td>По таблице</td>
+            <td><input type="text" id="E1Field5miss2" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Средняя температура газа в экономайзере</td>
+            <td>θ<sub>ср</sub></td>
+            <td>кгс/см<sup>2</sup></td>
+            <td>(θ<sup>'</sup> + θ<sup>''</sup>)/2</td>
+            <td id="E1Paste7"></td>
+        </tr>
+        <tr>
+            <td>Удельный объем воды</td>
+            <td>υ<sub>в</sub></td>
+            <td>м<sup>3</sup>/кг</td>
+            <td>По таблице</td>
+            <td><input type="text" id="E1Field6" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Внешний диаметр труб</td>
+            <td>d<sub>н</sub></td>
+            <td>м</td>
+            <td>Принимаем</td>
+            <td><input type="text" id="E1Field7" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Внутренний диаметр труб</td>
+            <td>d<sub>вн</sub></td>
+            <td>м</td>
+            <td>Принимаем</td>
+            <td><input type="text" id="E1Field8" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Поперечный шаг</td>
+            <td>S<sub>1</sub></td>
+            <td>м</td>
+            <td>Принимаем</td>
+            <td><input type="text" id="E1Field9" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Продольный шаг</td>
+            <td>S<sub>2</sub></td>
+            <td>м</td>
+            <td>Принимаем</td>
+            <td><input type="text" id="E1Field10" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Относительный поперечный шаг</td>
+            <td>σ<sub>1</sub></td>
+            <td>-</td>
+            <td>S<sub>1</sub> / d <sub>н</sub></td>
+            <td id="E1Paste8"></td>
+        </tr>
+        <tr>
+            <td>Относительный продольный шаг</td>
+            <td>σ<sub>2</sub></td>
+            <td>-</td>
+            <td>S<sub>2</sub> / d <sub>н</sub></td>
+            <td id="E1Paste9"></td>
+        </tr>
+        <tr>
+            <td>Глубина конвективной шахты</td>
+            <td>l<sub>кш</sub></td>
+            <td>м</td>
+            <td>Из геометрии</td>
+            <td><input type="text" id="E1Field11" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Число змеевиков</td>
+            <td>n<sub>зм</sub></td>
+            <td>-</td>
+            <td>l<sub>кш</sub>/S<sub>1</sub> - 1</td>
+            <td id="E1Paste10"></td>
+        </tr>
+        <tr>
+            <td>Массовая скорость воды</td>
+            <td>ρW</td>
+            <td>кг/с</td>
+            <td>Принимаем</td>
+            <td><input type="text" id="E1Field12" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Проходное сечение по воде</td>
+            <td>f</td>
+            <td>м<sup>2</sup></td>
+            <td>(D<sub>эк</sub>*1000) / (3600*ρW)</td>
+            <td id="E1Paste11"></td>
+        </tr>
+        <tr>
+            <td>Количество заходов</td>
+            <td>n<sub>зах</sub></td>
+            <td>-</td>
+            <td>4*f / (π*d<sup>2</sup><sub>вн</sub>*n<sub>зм</sub>*2)</td>
+            <td id="E1Paste12"></td>
+        </tr>
+        <tr>
+            <td>Проходное сечение по воде (пересчет)</td>
+            <td>f<sub>нов</sub></td>
+            <td>м<sup>2</sup></td>
+            <td>2*n<sub>зм</sub>*n<sub>зах</sub>*(π*d<sup>2</sup><sub>вн</sub>/4)</td>
+            <td id="E1Paste13"></td>
+        </tr>
+        <tr>
+            <td>Массовая скорость воды</td>
+            <td>ρW<sup>нов</sup></td>
+            <td>кг/с</td>
+            <td>D<sub>эк</sub>*1000 / (f<sub>нов</sub>*3600)</td>
+            <td id="E1Paste14"></td>
+        </tr>
+        <tr>
+            <td>Скорость воды</td>
+            <td>W<sub>в</sub></td>
+            <td>м/с</td>
+            <td>ρW<sup>нов</sup>*υ<sub>в</sub></td>
+            <td id="E1Paste15"></td>
+        </tr>
+        <tr>
+            <td>Больший перепад температур</td>
+            <td>Δt<sub>б</sub></td>
+            <td><sup>o</sup>C</td>
+            <td>θ<sup>'</sup>- t<sup>''</sup></td>
+            <td id="E1Paste16"></td>
+        </tr>
+        <tr>
+            <td>Меньший перепад температур</td>
+            <td>Δt<sub>м</sub></td>
+            <td><sup>o</sup>C</td>
+            <td>θ<sup>''</sup> - t<sup>'</sup></td>
+            <td id="E1Paste17"></td>
+        </tr>
+        <tr>
+            <td>Среднелогарифмический напор</td>
+            <td>Δt<sub>г</sub></td>
+            <td><sup>o</sup>C</td>
+            <td>(Δt<sub>б</sub> - Δt<sub>м</sub>) / (2.3*lg(Δt<sub>б</sub>/Δt<sub>м</sub>))</td>
+            <td id="E1Paste18"></td>
+        </tr>
+        <tr>
+            <td>Проходное сечение по газу</td>
+            <td>F</td>
+            <td>м<sup>2</sup></td>
+            <td>a<sub>s</sub>*l<sub>кш</sub> - d<sub>н</sub>*n<sub>зм</sub>*a<sub>s</sub></td>
+            <td id="E1Paste19"></td>
+        </tr>
+        <tr>
+            <td>Скорость газа</td>
+            <td>W<sub>г</sub></td>
+            <td>м/с</td>
+            <td>(B<sub>р</sub>*V<sub>г</sub>*(θ<sub>ср</sub> + 273)) / (3600*F*273)</td>
+            <td id="E1Paste20"></td>
+        </tr>
+        <tr>
+            <td>Коэффициент теплопередачи</td>
+            <td>k</td>
+            <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+            <td>Принимаем</td>
+            <td><input type="text" id="E1Field13" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Поверхность теплопередачи</td>
+            <td>H<sub>г</sub></td>
+            <td>м<sup>2</sup></td>
+            <td>B<sub>р</sub>*θ<sub>б</sub> / (k*Δt<sub>г</sub>)</td>
+            <td id="E1Paste21"></td>
+        </tr>
+        <tr>
+            <td>Эффективная толщина излучающего слоя</td>
+            <td>S</td>
+            <td>м</td>
+            <td>0.9*d<sub>н</sub>*((4*S<sub>1</sub>*S<sub>2</sub>) / (π*d<sup>2</sup><sub>н</sub>) - 1)</td>
+            <td id="E1Paste22"></td>
+        </tr>
+        <tr>
+            <td>Коэффициент ослабления трехатомными газами</td>
+            <td>k<sub>г</sub></td>
+            <td>см<sup>2</sup>/м*кгс</td>
+            <td>По номограмме 3</td>
+            <td><input type="text" id="E1Field14" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Коэффициент ослабления золовыми частицами</td>
+            <td>k<sub>зл</sub></td>
+            <td>см<sup>2</sup>/м*кгс</td>
+            <td>По номограмме 4</td>
+            <td><input type="text" id="E1Field15" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Коэффициент ослабления лучей</td>
+            <td>k</td>
+            <td>-</td>
+            <td>k<sub>г</sub>*r<sub>п</sub> + k<sub>зл</sub>*μ<sub>зл</sub></td>
+            <td id="E1Paste23"></td>
+        </tr>
+        <tr>
+            <td>Оптическая толщина</td>
+            <td>k<sub>p</sub>s</td>
+            <td>-</td>
+            <td>k*p*S</td>
+            <td id="E1Paste24"></td>
+        </tr>
+        <tr>
+            <td>Степень черноты</td>
+            <td>a<sub>ч</sub></td>
+            <td>-</td>
+            <td>1 - e<sup>-k<sub>p</sub>s</sup></td>
+            <td id="E1Paste25"></td>
+        </tr>
+        <tr>
+            <td>Коэффициент тепловой эффективности</td>
+            <td>ψ</td>
+            <td>-</td>
+            <td>По таблице</td>
+            <td><input type="text" id="E1Field16" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Поправка</td>
+            <td>Δt<sub>эк</sub></td>
+            <td><sup>o</sup>C</td>
+            <td>По графику</td>
+            <td><input type="text" id="E1Field16miss" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Номинальный коэффициент теплоотдачи конвекцией к воде</td>
+            <td>α<sub>н2</sub></td>
+            <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+            <td>По номограмме</td>
+            <td><input type="text" id="E1Field17" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Поправка</td>
+            <td>C<sub>t</sub></td>
+            <td>-</td>
+            <td>По номограмме</td>
+            <td><input type="text" id="E1Field18" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Коэффициент теплоотдачи конвекцией к воде</td>
+            <td>α<sub>2</sub></td>
+            <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+            <td>α<sub>н2</sub>*C<sub>t</sub></td>
+            <td id="E1Paste26"></td>
+        </tr>
+        <tr>
+            <td>Температура загрязнения стенки</td>
+            <td>t<sub>з</sub></td>
+            <td><sup>o</sup>C</td>
+            <td>t<sub>ср</sub> + Δt<sub>эк</sub></td>
+            <td id="E1Paste27"></td>
+        </tr>
+        <tr>
+            <td>Номинальный коэффициент теплоотдачи излучением</td>
+            <td>α<sub>нл</sub></td>
+            <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+            <td>По номограмме</td>
+            <td><input type="text" id="E1Field19" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Коэффициент теплоотдачи излучением</td>
+            <td>α<sub>л</sub></td>
+            <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+            <td>α<sub>нл</sub>*a<sub>ч</sub></td>
+            <td id="E1Paste28"></td>
+        </tr>
+        <tr>
+            <td>Поправка на число труб по ходу газа</td>
+            <td>C<sub>z</sub></td>
+            <td>-</td>
+            <td>По номограмме</td>
+            <td><input type="text" id="E1Field20" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Поправка на геометрическую компоновку</td>
+            <td>C<sub>s</sub></td>
+            <td>-</td>
+            <td>[1 + (2*σ<sub>1</sub> - 3)*(1 - σ<sub>2</sub>/2)<sup>3</sup>]<sup>-2</sup></td>
+            <td id="E1Paste29"></td>
+        </tr>
+        <tr>
+            <td>Поправка</td>
+            <td>C<sub>ф</sub></td>
+            <td>-</td>
+            <td>По номограмме</td>
+            <td><input type="text" id="E1Field21" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Номинальный коэффициент теплоотдачи конвекцией</td>
+            <td>α<sub>нк</sub></td>
+            <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+            <td>По номограмме</td>
+            <td><input type="text" id="E1Field22" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Коэффициент теплоотдачи конвекцией</td>
+            <td>α<sub>к</sub></td>
+            <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+            <td>α<sub>нк</sub>*C<sub>z</sub>*C<sub>s</sub>*C<sub>ф</sub></td>
+            <td id="E1Paste30"></td>
+        </tr>
+        <tr>
+            <td>Коэффициент использования</td>
+            <td>ξ</td>
+            <td>-</td>
+            <td>По графику</td>
+            <td><input type="text" id="E1Field23" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Коэффициент теплоотдачи к воде</td>
+            <td>α<sub>1</sub></td>
+            <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+            <td>ξ*(α<sub>л</sub> + α<sub>к</sub>)</td>
+            <td id="E1Paste31"></td>
+        </tr>
+        <tr>
+            <td>Коэффициент теплопередачи</td>
+            <td>k</td>
+            <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+            <td>ψ*α<sub>1</sub></td>
+            <td id="E1Paste32"></td>
+        </tr>
+        <tr>
+            <td>Поверхность теплопередачи</td>
+            <td>H<sup>расч</sup><sub>г</sub></td>
+            <td>м<sup>2</sup></td>
+            <td>B<sub>р</sub>*θ<sub>б</sub> / (k*Δt<sub>г</sub>)</td>
+            <td id="E1Paste33"></td>
+        </tr>
+        <tr>
+            <td>Погрешность</td>
+            <td>-</td>
+            <td>%</td>
+            <td>[ |(H<sub>г</sub> - H<sup>расч</sup><sub>г</sub>) / H<sub>г</sub>| ]*100%</td>
+            <td id="E1Paste34"></td>
+        </tr>
+        <tr>
+            <td>Длина змеевика</td>
+            <td>l<sub>зм</sub></td>
+            <td>м</td>
+            <td>H<sup>расч</sup><sub>г</sub> / π*d<sub>н</sub>*n<sub>зм</sub>*2*n<sub>зах</sub></td>
+            <td id="E1Paste35"></td>
+        </tr>
+        <tr>
+            <td>Число прямых участков</td>
+            <td>n<sub>пр</sub></td>
+            <td>-</td>
+            <td>Принимаем</td>
+            <td><input type="text" id="E1Field24" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>Глубина пакета</td>
+            <td>b</td>
+            <td>м</td>
+            <td>2*S<sub>2</sub>*(n<sub>пр</sub> - 1) + n<sub>пр</sub>*d<sub>н</sub> + S<sub>2</sub></td>
+            <td id="E1Paste36"></td>
+        </tr>
+
+     </table>
+      <button class="btn btn-info ok okcalculationEconomizer1">Ok</button>
+   </div>
+
+ </div>
+
+ <!--Расчет экономайзера I ступени-->
+
+ <div id="AirHeater1Step" hidden>
+   <p class='part' align='center'>11</p>
+   <h3>Расчет воздухоподогревателя I ступени</h3>
+   <span>(Сначала заполните необходимые данные и нажмите <span style="color:red; font-size:30px;">ок</span>)</span>
+</div>
+
+ <!--Расчет воздухоподогревателя I ступени-->
+
+ <div class="row calculationAirHeater1" hidden>
+
+   <div class="col-lg-12">
+        <table border="1">
+           <tr>
+               <td><b>Расчитываемая величина</b></td>
+               <td><b>Обозначение</b></td>
+               <td><b>Размерность</b></td>
+               <td><b>Формула</b></td>
+               <td><b>Результат</b></td>
+           </tr>
+           <tr>
+               <td>Энтальпия воздуха на входе</td>
+               <td>i<sup>'</sup></td>
+               <td>Ккал/кг</td>
+               <td>По таблице</td>
+               <td><input type="text" id="AH1Field1" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Энтальпия воздуха на выходе</td>
+               <td>i<sup>''</sup></td>
+               <td>Ккал/кг</td>
+               <td>По таблице</td>
+               <td><input type="text" id="AH1Field2" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Разность энтальпий воздуха</td>
+               <td>Δi</td>
+               <td>Ккал/кг</td>
+               <td>i<sup>''</sup> - i<sup>'</sup></td>
+               <td id="AH1Paste1"></td>
+           </tr>
+           <tr>
+               <td>Температура воздуха на входе</td>
+               <td>t<sup>'</sup></td>
+               <td><sup>o</sup>C</td>
+               <td>Принимаем</td>
+               <td><input type="text" id="AH1Field3" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Температура воздуха на выходе</td>
+               <td>t<sup>''</sup></td>
+               <td><sup>o</sup>C</td>
+               <td>Принимаем</td>
+               <td><input type="text" id="AH1Field4" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Средняя температура воздуха в воздухоподогревателе</td>
+               <td>t<sub>ср</sub></td>
+               <td><sup>o</sup>C</td>
+               <td>(t<sup>'</sup> + t<sup>''</sup>)/2</td>
+               <td id="AH1Paste2"></td>
+           </tr>
+           <tr>
+               <td>Энтальпия газов на входе</td>
+               <td>I<sup>'</sup></td>
+               <td>Ккал/кг</td>
+               <td>I<sup>'</sup> = I<sup>''</sup><sub>экI</sub></td>
+               <td id="AH1Paste3"></td>
+           </tr>
+           <tr>
+               <td>Температура газа на входе</td>
+               <td>θ<sup>'</sup></td>
+               <td><sup>o</sup>C</td>
+               <td>θ<sup>'</sup> = θ<sup>''</sup><sub>экI</sub></td>
+               <td id="AH1Paste4"></td>
+           </tr>
+           <tr>
+               <td>Стехиометрический коэффициент</td>
+               <td>β</td>
+               <td>-</td>
+               <td>α - Δα<sub>пл</sub></td>
+               <td id="AH1Paste5"></td>
+           </tr>
+           <tr>
+               <td>Присос воздуха</td>
+               <td>Δα</td>
+               <td>-</td>
+               <td>По таблице</td>
+               <td><input type="text" id="AH1Field5" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Балансовое тепло, передаваемое в воздухоподогревателе</td>
+               <td>Q<sub>б</sub></td>
+               <td>Ккал/кг</td>
+               <td>(β + Δα/2)*Δi</td>
+               <td id="AH1Paste6"></td>
+           </tr>
+           <tr>
+               <td>Энтальпия газов на выходе</td>
+               <td>I<sup>''</sup></td>
+               <td>Ккал/кг</td>
+               <td>(φ*I<sup>'</sup> - Q<sub>б</sub>)/φ + I<sub>хв</sub>*Δα/2</td>
+               <td id="AH1Paste7"></td>
+           </tr>
+           <tr>
+               <td>Температура газа на выходе</td>
+               <td>θ<sup>''</sup></td>
+               <td><sup>o</sup>C</td>
+               <td>По таблице</td>
+               <td><input type="text" id="AH1Field6" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Средняя температура газов в воздухоподогревателе</td>
+               <td>θ<sub>ср</sub></td>
+               <td>кгс/см<sup>2</sup></td>
+               <td>(θ<sup>'</sup> + θ<sup>''</sup>)/2</td>
+               <td id="AH1Paste8"></td>
+           </tr>
+           <tr>
+               <td>Внешний диаметр труб</td>
+               <td>d<sub>н</sub></td>
+               <td>м</td>
+               <td>Принимаем</td>
+               <td><input type="text" id="AH1Field7" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Внутренний диаметр труб</td>
+               <td>d<sub>вн</sub></td>
+               <td>м</td>
+               <td>Принимаем</td>
+               <td><input type="text" id="AH1Field8" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Поперечный шаг</td>
+               <td>S<sub>1</sub></td>
+               <td>м</td>
+               <td>Принимаем</td>
+               <td><input type="text" id="AH1Field9" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Продольный шаг</td>
+               <td>S<sub>2</sub></td>
+               <td>м</td>
+               <td>Принимаем</td>
+               <td><input type="text" id="AH1Field10" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Относительный поперечный шаг</td>
+               <td>σ<sub>1</sub></td>
+               <td>-</td>
+               <td>S<sub>1</sub> / d <sub>н</sub></td>
+               <td id="AH1Paste9"></td>
+           </tr>
+           <tr>
+               <td>Относительный продольный шаг</td>
+               <td>σ<sub>2</sub></td>
+               <td>-</td>
+               <td>S<sub>2</sub> / d <sub>н</sub></td>
+               <td id="AH1Paste10"></td>
+           </tr>
+           <tr>
+               <td>Число труб в ряду</td>
+               <td>n<sub>тр.ряд</sub></td>
+               <td>-</td>
+               <td>a<sub>s</sub>/S<sub>1</sub> - 1</td>
+               <td id="AH1Paste11"></td>
+           </tr>
+           <tr>
+               <td>Число рядов</td>
+               <td>n<sub>рядов</sub></td>
+               <td>-</td>
+               <td>l<sub>кш</sub>/S<sub>2</sub> - 1</td>
+               <td id="AH1Paste12"></td>
+           </tr>
+           <tr>
+               <td>Суммарное число труб</td>
+               <td>N<sub>∑</sub></td>
+               <td>-</td>
+               <td>n<sub>тр.ряд</sub>*n<sub>рядов</sub></td>
+               <td id="AH1Paste12miss"></td>
+           </tr>
+           <tr>
+               <td>Проходное сечение по газу</td>
+               <td>F</td>
+               <td>м<sup>2</sup></td>
+               <td>N<sub>∑</sub>*π*d<sup>2</sup><sub>вн</sub> / 4</td>
+               <td id="AH1Paste13"></td>
+           </tr>
+           <tr>
+               <td>Скорость газа</td>
+               <td>W<sub>г</sub></td>
+               <td>м/с</td>
+               <td>(B<sub>р</sub>*V<sub>г</sub>*(θ<sub>ср</sub> + 273)) / (3600*F*273)</td>
+               <td id="AH1Paste14"></td>
+           </tr>
+           <tr>
+               <td>Скорость воздуха</td>
+               <td>W<sub>в</sub></td>
+               <td>м/с</td>
+               <td>Принимаем</td>
+               <td><input type="text" id="AH1Field11" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Больший перепад температур</td>
+               <td>Δt<sub>б</sub></td>
+               <td><sup>o</sup>C</td>
+               <td>θ<sup>''</sup>- t<sup>'</sup></td>
+               <td id="AH1Paste15"></td>
+           </tr>
+           <tr>
+               <td>Меньший перепад температур</td>
+               <td>Δt<sub>м</sub></td>
+               <td><sup>o</sup>C</td>
+               <td>θ<sup>'</sup> - t<sup>''</sup></td>
+               <td id="AH1Paste16"></td>
+           </tr>
+           <tr>
+               <td>Среднелогарифмический напор для противотока</td>
+               <td>Δt<sub>пр</sub></td>
+               <td><sup>o</sup>C</td>
+               <td>(Δt<sub>б</sub> - Δt<sub>м</sub>) / (2.3*lg(Δt<sub>б</sub>/Δt<sub>м</sub>))</td>
+               <td id="AH1Paste17"></td>
+           </tr>
+           <tr>
+               <td>Коэффициент пересчета от противоточной схемы к более сложной</td>
+               <td>ψ</td>
+               <td>-</td>
+               <td>По номограмме</td>
+               <td><input type="text" id="AH1Field12" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Среднелогарифмический напор</td>
+               <td>Δt<sub>ср</sub></td>
+               <td><sup>o</sup>C</td>
+               <td>ψ*Δt<sub>пр</sub></td>
+               <td id="AH1Paste18"></td>
+           </tr>
+           <tr>
+               <td>Температура загрязнения стенки</td>
+               <td>t<sub>з</sub></td>
+               <td><sup>o</sup>C</td>
+               <td>(θ<sub>ср</sub> + t<sub>ср</sub>) / 2</td>
+               <td id="AH1Paste23"></td>
+           </tr>
+           <tr>
+               <td>Коэффициент теплоотдачи конвекцией к воздуху</td>
+               <td>α<sub>2</sub></td>
+               <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+               <td>α<sub>н2</sub>*C<sub>ф</sub>*C<sub>z</sub>*C<sub>s</sub></td>
+               <td id="AH1Paste25"></td>
+           </tr>
+           <tr>
+               <td>Номинальный коэффициент теплоотдачи конвекцией к воздуху</td>
+               <td>α<sub>н2</sub></td>
+               <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+               <td>По номограмме</td>
+               <td><input type="text" id="AH1Field16" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Поправка на число рядов</td>
+               <td>C<sub>z</sub></td>
+               <td>-</td>
+               <td>По номограмме</td>
+               <td><input type="text" id="AH1Field17" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Поправка на геометрическую компоновку</td>
+               <td>C<sub>s</sub></td>
+               <td>-</td>
+               <td>По номограмме</td>
+               <td><input type="text" id="AH1Field17miss" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Поправка</td>
+               <td>C<sub>ф</sub></td>
+               <td>-</td>
+               <td>По номограмме</td>
+               <td><input type="text" id="AH1Field18" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Номинальный коэффициент теплоотдачи конвекцией от газа</td>
+               <td>α<sub>нк</sub></td>
+               <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+               <td>По номограмме</td>
+               <td><input type="text" id="AH1Field19" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Поправка</td>
+               <td>C<sub>ф</sub></td>
+               <td>-</td>
+               <td>По номограмме</td>
+               <td><input type="text" id="AH1Field20" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Поправка</td>
+               <td>C<sub>l</sub></td>
+               <td>-</td>
+               <td>По номограмме</td>
+               <td><input type="text" id="AH1Field21" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Коэффициент теплоотдачи конвекцией от газа</td>
+               <td>α<sub>к</sub></td>
+               <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+               <td>α<sub>нк</sub>*C<sub>ф</sub>*C<sub>l</sub></td>
+               <td id="AH1Paste27"></td>
+           </tr>
+           <tr>
+               <td>Коэффициент использования</td>
+               <td>ξ</td>
+               <td>-</td>
+               <td>По графику</td>
+               <td><input type="text" id="AH1Field22" class="form-control"></td>
+           </tr>
+           <tr>
+               <td>Коэффициент теплоотдачи</td>
+               <td>α<sub>1</sub></td>
+               <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+               <td>α<sub>к</sub></td>
+               <td id="AH1Paste28"></td>
+           </tr>
+           <tr>
+               <td>Коэффициент теплопередачи</td>
+               <td>k</td>
+               <td>Ккал/м<sup>2</sup>*ч*<sup>o</sup>C</td>
+               <td>ψ*α<sub>1</sub>*α<sub>2</sub> / (α<sub>1</sub> + α<sub>2</sub>)</td>
+               <td id="AH1Paste29"></td>
+           </tr>
+           <tr>
+               <td>Поверхность теплопередачи</td>
+               <td>H<sub>г</sub></td>
+               <td>м<sup>2</sup></td>
+               <td>B<sub>р</sub>*θ<sub>б</sub> / (k*Δt<sub>пр</sub>)</td>
+               <td id="AH1Paste30"></td>
+           </tr>
+           <tr>
+               <td>Средний диаметр</td>
+               <td>d<sub>ср</sub></td>
+               <td>м</td>
+               <td>(d<sub>н</sub> + d<sub>вн</sub>) / 2</td>
+               <td id="AH1Paste31"></td>
+           </tr>
+           <tr>
+               <td>Глубина пакета</td>
+               <td>h<sub>впI</sub></td>
+               <td>м</td>
+               <td>H<sub>г</sub> / (π*d<sub>ср</sub>*N<sub>∑</sub>)</td>
+               <td id="AH1Paste32"></td>
+           </tr>
+
+
+       </table>
+      <button class="btn btn-info ok okcalculationAirHeater1">Ok</button>
+   </div>
+
+ </div>
+
+ <!--Расчет воздухоподогревателя I ступени-->
+
+  </div>
+
+</body>
+<script src="js/jquery.js" type="text/javascript"></script>
+<script src="js/steam.js" type="text/javascript"></script>
+</html>

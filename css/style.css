@@ -1,0 +1,54 @@
+p{
+  font: 20px Verdana;
+  margin-top: 20px;
+}
+h3{
+  margin-left: 15px;
+}
+input{
+  display: inline;
+}
+.input-group{
+  margin-bottom: 20px;
+  width: 220px;
+}
+span{
+  font: 20px Verdana;
+}
+.ok{
+  width: 150px;
+  margin-top: 20px;
+}
+div.error{
+  font: 30px Verdana;
+  margin: 10px auto;
+  color: red;
+}
+ul li{
+  padding: 5px;
+  list-style: none;
+  font: 20px Verdana;
+}
+.part{
+  border: 1px solid #000;
+  border-radius: 50px;
+  width:50px;
+  font-size: 30px;
+  font-family: Verdana;
+  font-weight: bold;
+}
+td{
+  text-align: center;
+  padding: 6px;
+}
+.bg{
+  background-image: url('../files/1.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+.ms h1{
+  font-style: italic;
+  text-align: center;
+  margin: auto auto;
+  margin-top: 400px;
+}
